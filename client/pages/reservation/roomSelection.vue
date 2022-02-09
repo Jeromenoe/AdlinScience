@@ -5,18 +5,20 @@
             <RoomAttributes v-for="room in meetingRooms" :key="room.id" :room="room" @change="changeValue" :checked="room.id == roomId"/>
 		</div>
 		<div class="rooms-selection-buttons">
-            <button @click="validate()">Valider</button>
-            <button @click="cancel()">Retour</button>
+            <CustomButton @click="validate()" btnStyle="validate">Valider</CustomButton>
+            <CustomButton @click="cancel()" btnStyle="cancel">Retour</CustomButton>
         </div> 
     </div>
 </template>
 
 <script>
 import RoomAttributes from "@/components/MeetingRoom/RoomAttributes";
+import CustomButton from "@/components/UI/CustomButton"
 
 export default {
     components: {
         RoomAttributes,
+		CustomButton
     },
     methods: {
         validate() {
@@ -52,7 +54,4 @@ export default {
 	padding: 10px;
 }
 
-.rooms-selection-buttons button {
-	cursor: pointer;
-}
 </style>
