@@ -3,7 +3,7 @@
         <h1>Sélection de la salle de réunion</h1>
         <ul class="meeting-rooms-list">
             <li v-for="room in meetingRooms" :key="room.id">
-                <RoomAttributes :roomId="room.id" @change="changeValue" :checked="room.id == roomId"/>
+                <RoomAttributes :room="room" @change="changeValue" :checked="room.id == roomId"/>
             </li>
         </ul>
         <div class="rooms-selection-buttons">

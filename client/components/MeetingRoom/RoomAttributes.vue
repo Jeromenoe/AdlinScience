@@ -1,7 +1,7 @@
 <template>
     <div>
-		<input type="radio" :id="roomId" name="rooms" :value="roomId" :checked="checked" @change="$emit('change', $event.target.value)">
-		<label :for="roomId">room numero : {{roomId}}</label>
+		<input type="radio" :id="room.id" name="rooms" :value="room.id" :checked="checked" @change="$emit('change', $event.target.value)">
+		<label :for="room.id">room name : {{room.name}}</label>
     </div>
 </template>
 
@@ -9,9 +9,9 @@
 export default {
     name: "RoomAttributes",
     props: {
-        roomId: {
-            type: Number,
-            default: 0,
+        room: {
+            type: Object,
+            default: {},
         },
 		checked: {
 			type: Boolean,
