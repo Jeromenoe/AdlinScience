@@ -8,17 +8,8 @@
 
 <script>
 export default {
-	data() {
-		return {
-			meetingRoom: {
-				id: 0,
-				name: ""
-			}
-		}
-	},
 	created() {
 		this.meetingRoom = this.$store.getters.meetingRoom;
-		// this.$store.dispatch('setMeetingRoom', this.meetingRoom);
 	}
 }
 </script>

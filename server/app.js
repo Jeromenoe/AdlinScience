@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const members = require('./Members.js');
+const meetingRoomsRoutes = require('./routes/meetingRooms.js')
 
 const logger = (req, res, next) => {
 	console.log('this is my log');
@@ -14,9 +14,7 @@ const PORT = process.env.PORT || 3001;
 
 app.use(logger);
 
-app.get('/api/members', (req, res) => {
-	res.json(members);
-})
+app.use('/api', meetingRoomsRoutes);
 
 
 app.listen(PORT, () => console.log(`Listening on port : ${PORT}`));
