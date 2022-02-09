@@ -1,15 +1,13 @@
 <template>
-    <div>
-        <h1>Sélection de la salle de réunion</h1>
-        <ul class="meeting-rooms-list">
-            <li v-for="room in meetingRooms" :key="room.id">
-                <RoomAttributes :room="room" @change="changeValue" :checked="room.id == roomId"/>
-            </li>
-        </ul>
-        <div class="rooms-selection-buttons">
+	<div class="container">
+        <h3>Salles de réunion</h3>
+		<div class="meeting-rooms">
+            <RoomAttributes v-for="room in meetingRooms" :key="room.id" :room="room" @change="changeValue" :checked="room.id == roomId"/>
+		</div>
+		<div class="rooms-selection-buttons">
             <button @click="validate()">Valider</button>
             <button @click="cancel()">Retour</button>
-        </div>
+        </div> 
     </div>
 </template>
 
@@ -43,11 +41,18 @@ export default {
 </script>
 
 <style scoped>
-.meeting-rooms-list {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-    display: flex;
-    flex-direction: column;
+.container {
+    padding: 10px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.meeting-rooms {
+	padding: 10px;
+}
+
+.rooms-selection-buttons button {
+	cursor: pointer;
 }
 </style>
