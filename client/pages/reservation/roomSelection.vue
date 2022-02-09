@@ -4,7 +4,7 @@
 		<div class="meeting-rooms">
             <RoomAttributes v-for="room in meetingRooms" :key="room.id" :room="room" @change="changeValue" :checked="room.id == roomId"/>
 		</div>
-		<div class="rooms-selection-buttons">
+		<div class="mr-buttons">
             <CustomButton @click="validate()" btnStyle="validate">Valider</CustomButton>
             <CustomButton @click="cancel()" btnStyle="cancel">Retour</CustomButton>
         </div> 
@@ -50,8 +50,38 @@ export default {
 	align-items: center;
 }
 
+.container h3 {
+	padding: 0px;
+	margin: 10px 0px 0px 0px;
+}
+
 .meeting-rooms {
 	padding: 10px;
+	width: 60%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.mr-buttons {
+	display: flex;
+	justify-content: center;
+}
+
+
+@media (max-width: 400px) {
+    .meeting-room {
+        width: 220px;
+    }
+	.mr-buttons {
+		width: 220px;
+	}
+}
+
+@media (min-width: 800px) {
+    .meeting-room {
+        width: 450px;
+    }
 }
 
 </style>

@@ -3,8 +3,14 @@
 		<input type="radio" :id="room.id" name="rooms" :value="room.id" :checked="checked" @change="$emit('change', $event.target.value)">
         <label :for="room.id">
 			<span class="mr-icon"></span>
-            <span class="mr-title">Nom : {{ room.name }}</span>
-            <span class="mr-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit. In semper quam nunc.</span>
+            <span class="mr-name">Nom : {{ room.name }}</span>
+            <span class="mr-description">Description : {{ room.description }}</span>
+            <span class="mr-capacity">Capacité : {{ room.capacity }}</span>
+            <span v-if="room.equipements.length" class="mr-equipements">Equipements :
+				<ul>
+					<li v-for="elem in room.equipements" :key="elem">{{ elem.name }}</li>
+				</ul>
+			</span>
         </label>
     </div>
 </template>
@@ -27,16 +33,17 @@ export default {
 
 <style scoped>
 .meeting-room {
-	background-color: #ddd;
 	margin: 10px 0;
-	border-radius: 6px;
-	border: 1px solid #ccc;
+	width: 100%;
 }
 
 .meeting-room label {
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
+	border-radius: 6px;
+	border: 1px solid #ccc;
+	background-color: #ddd;
 }
 
 .meeting-room label:hover {
@@ -51,5 +58,20 @@ export default {
 	background-color: #337ab7;
 	border-radius: 6px;
 	border: 1px solid #ccc;
+	color: #eee;
 }
+
+.mr-equipements ul {
+	padding: 0px 0px 0px 20px;
+	margin: 0;
+	list-style-type: circle;
+	font-size: 14px;
+	color: #555;
+}
+
+.meeting-room input:checked ~ label .mr-equipements ul {
+	color: #eee;
+}
+
+
 </style>
