@@ -8,7 +8,7 @@
             <span class="mr-capacity">Capacité : {{ room.capacity }}</span>
             <span v-if="room.equipements.length" class="mr-equipements">Equipements :
 				<ul>
-					<li v-for="elem in room.equipements" :key="elem">{{ elem.name }}</li>
+					<li v-for="elem in room.equipements" :key="elem.name + room.id">{{ elem.name }}</li>
 				</ul>
 			</span>
         </label>

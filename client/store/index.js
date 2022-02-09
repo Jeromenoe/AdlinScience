@@ -4,13 +4,13 @@ import axios from 'axios';
 const url = 'http://localhost:3001/api/'
 const createStore = () => {
 	return new vuex.Store({
-		state: {
+		state: () => ({
 			meetingRoom: {
 				id: 0,
 				name: "test"
 			},
 			meetingRooms: []
-		},
+		}),
 		mutations: {
 			setMeetingRoom(state, room) {
 				state.meetingRoom = room;
