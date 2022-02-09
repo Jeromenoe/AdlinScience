@@ -3,7 +3,28 @@ import vuex from 'vuex';
 const createStore = () => {
 	return new vuex.Store({
 		state: {
-			meetingRoom: "default"
+			meetingRoom: {
+				id: 0,
+				name: "room0"
+			},
+			meetingRooms: [
+				{
+					id: 0,
+					name: "room0"
+				},
+				{
+					id: 1,
+					name: "room1"
+				},
+				{
+					id: 2,
+					name: "room2"
+				},
+				{
+					id: 3,
+					name: "room3"
+				}
+			]
 		},
 		mutations: {
 			setMeetingRoom(state, room) {
@@ -12,7 +33,7 @@ const createStore = () => {
 		},
 		actions: {
 			// nuxtServerInit(vuexContext, context) {
-				
+
 			// },
 			setMeetingRoom(vuexContext, room) {
 				vuexContext.commit('setMeetingRoom', room);
@@ -21,6 +42,9 @@ const createStore = () => {
 		getters: {
 			meetingRoom(state) {
 				return state.meetingRoom;
+			},
+			meetingRooms(state) {
+				return state.meetingRooms;
 			}
 		}
 	})
