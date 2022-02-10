@@ -3,6 +3,7 @@
     <v-col>
       <v-sheet height="600">
         <v-calendar
+		:start="date"
           ref="calendar"
           v-model="value"
           color="primary"
@@ -40,6 +41,14 @@
 		   name: 'Unavailable',
             color: "#ff0000",
             start: 1644477300000,
+            end: 1644479100000,
+            timed: true,
+			movable: false,
+	  },
+	  {
+		   name: 'Unavailable',
+            color: "#ff0000",
+            start: 1644487300000,
             end: 1644489100000,
             timed: true,
 			movable: false,
@@ -50,6 +59,12 @@
       createStart: null,
       extendOriginal: null,
     }),
+	props: {
+		date: {
+			type: String,
+			required: true
+		}
+	},
     methods: {
       startDrag ({ event, timed }) {
         if (event && timed) {
@@ -67,6 +82,9 @@
           const start = this.dragEvent.start
           this.dragTime = mouse - start
         } else {
+			if (this.events.length - 1 >= 0 && this.events[this.events.length - 1].movable == true) {
+				this.events.pop();
+			}
           this.createStart = this.roundTime(mouse)
           this.createEvent = {
             name: 'Créneau actuel',
@@ -92,8 +110,14 @@
           const end = this.dragEvent.end
           const duration = end - start
           const newStartTime = mouse - this.dragTime
-          const newStart = this.roundTime(newStartTime)
-          const newEnd = newStart + duration
+          var newStart = this.roundTime(newStartTime)
+          var newEnd = newStart + duration
+		  for (var i = 0; i < this.events.length - 1; i++) {
+			  if (newStart <= this.events[i].end && newStart > this.events[i].start - duration) {
+				  newStart =  this.events[i].end;
+          		 newEnd = newStart + duration;
+			  }
+			}
           this.dragEvent.start = newStart
           this.dragEvent.end = newEnd
         } else if (this.createEvent && this.createStart !== null) {

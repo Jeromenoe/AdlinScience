@@ -2,17 +2,19 @@
     <div class='custom-calendar'>
 		<div>
 			<DayPicker @input="updateDate"/>
-			<v-calendar-daily class="calendar" :start="date"></v-calendar-daily>
+			<CalendarDaily class="calendar" :date="date"/>
 		</div>
     </div>
 </template>
 
 <script>
-import DayPicker from '@/components/UI/DayPicker'
+import DayPicker from '@/components/UI/DayPicker';
+import CalendarDaily from '@/components/UI/CalendarDaily';
 
 export default {
 	components: {
-		DayPicker
+		DayPicker,
+		CalendarDaily
 	},
 	data() {
 		return {
