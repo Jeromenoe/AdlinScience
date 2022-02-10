@@ -1,8 +1,11 @@
 <template>
     <v-row class="fill-height">
         <v-col>
-            <v-sheet height="600" style="display:flex; flex-direction: column; align-content: center;">
-                <v-calendar :start="date" ref="calendar" 
+            <v-sheet height="600" 
+			style="display:flex; flex-direction: column; align-content: center;">
+                <v-calendar 
+				:start="date" 
+				ref="calendar" 
 				v-model="value" 
 				color="primary" 
 				type="day" 
@@ -80,7 +83,7 @@ export default {
                     name: "Créneau actuel",
                     color: "#0070BA",
                     start: this.createStart,
-                    end: this.createStart,
+                    end: this.createStart + (15 * 60 * 1000),
                     timed: true,
                     movable: true,
                 };
@@ -150,7 +153,8 @@ export default {
                     }
                 }
                 this.createEvent.start = newMin > min ? newMin : min;
-                this.createEvent.end = newMax < max ? newMax : max;
+                newMax = newMax < max ? newMax : max;
+				this.createEvent.end = newMax == this.createEvent.start ? newMax + (15 * 60 * 1000) : newMax;
             }
         },
         endDrag() {
@@ -199,7 +203,7 @@ export default {
             ) {
                 this.events[this.events.length - 1].movable = false;
                 this.events[this.events.length - 1].name = "Créneau validé";
-                this.events[this.events.length - 1].color = "#27be62";
+                this.events[this.events.length - 1].color = "#096A09";
             }
         },
     },
@@ -221,13 +225,16 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
+<style  lang="scss">
 .v-event-draggable {
     padding-left: 6px;
 }
 .v-event-timed {
     user-select: none;
     -webkit-user-select: none;
+	-moz-user-select: none; 
+	-webkit-user-select: none; 
+	-ms-user-select: none;
 }
 .v-event-drag-bottom {
     position: absolute;

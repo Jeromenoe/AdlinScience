@@ -23,7 +23,7 @@ export default {
 .the-header {
     width: 100%;
     position: fixed;
-    height: 60px;
+    height: 70px;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -33,7 +33,7 @@ export default {
 }
 
 .logo {
-	height: 60px;
+	height: 70px;
 }
 
 .adlin-science {
