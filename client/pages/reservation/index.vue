@@ -1,6 +1,6 @@
 <template>
 	<div class="container">
-        <h3>Salles de réunion</h3>
+        <h1>Salles de réunion</h1>
 		<div class="meeting-rooms">
             <RoomAttributes v-for="room in meetingRooms" :key="room.id" :room="room" @change="changeValue" :checked="room.id == roomId"/>
 		</div>
@@ -50,17 +50,20 @@ export default {
 	align-items: center;
 }
 
-.container h3 {
+.container h1 {
 	padding: 0px;
 	margin: 10px 0px 0px 0px;
+	color: #666;
 }
 
 .meeting-rooms {
-	padding: 10px;
-	width: 60%;
+	margin: 20px;
+	width: 80%;
 	display: flex;
 	flex-direction: column;
 	align-items: center;
+	overflow: auto;
+	height: 600px;
 }
 
 .mr-buttons {
@@ -69,17 +72,8 @@ export default {
 }
 
 
-@media (max-width: 400px) {
-    .meeting-room {
-        width: 220px;
-    }
-	.mr-buttons {
-		width: 220px;
-	}
-}
-
-@media (min-width: 800px) {
-    .meeting-room {
+@media (min-width: 600px) {
+    .meeting-rooms {
         width: 450px;
     }
 }

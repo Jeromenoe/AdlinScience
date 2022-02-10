@@ -12,7 +12,7 @@
 			>
 			<template v-slot:activator="{ on }">
 				<v-text-field
-				label="Reservation Date"
+				label="Date de réservation"
 				readonly
 				:value="fromDateDisp"
 				v-on="on"

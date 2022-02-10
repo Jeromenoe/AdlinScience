@@ -33,7 +33,7 @@ export default {
 
 <style scoped>
 .meeting-room {
-	margin: 10px 0;
+	margin: 6px 0;
 	width: 100%;
 }
 
@@ -41,7 +41,7 @@ export default {
 	display: flex;
 	flex-direction: column;
 	padding: 10px;
-	border-radius: 6px;
+	border-radius: 3px;
 	border: 1px solid #ccc;
 	background-color: #ddd;
 }
@@ -56,7 +56,7 @@ export default {
 
 .meeting-room input:checked ~ label {
 	background-color: #337ab7;
-	border-radius: 6px;
+	border-radius: 4px;
 	border: 1px solid #ccc;
 	color: #eee;
 }

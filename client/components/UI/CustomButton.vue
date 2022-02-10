@@ -25,7 +25,7 @@ export default {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 4px 4px;
   transition-duration: 0.4s;
   cursor: pointer;
 }
@@ -33,7 +33,7 @@ export default {
 .validate {
   background-color: white; 
   color: black; 
-  border: 2px solid #008CBA;
+  border: 1px solid #008CBA;
 }
 
 .validate:hover {
@@ -44,7 +44,7 @@ export default {
 .cancel {
   background-color: white; 
   color: black; 
-  border: 2px solid #f44336;
+  border: 1px solid #f44336;
 }
 
 .cancel:hover {
