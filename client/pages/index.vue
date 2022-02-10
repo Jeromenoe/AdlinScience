@@ -5,18 +5,21 @@
 			<span class="current-room">Réservation pour {{ meetingRoom.name }}</span>
 			<nuxt-link to="/reservation">Salles</nuxt-link>
 		</div>
-        
-        <br><br>
-        <MyCalendar />
+        <!-- <MyCalendar /> -->
+		<div style="width:80%; margin-top: 40px">
+			<CalendarDaily />
+		</div>
     </div>
 </template>
 
 <script>
 import MyCalendar from "@/components/UI/MyCalendar";
+import CalendarDaily from "@/components/UI/CalendarDaily"
 export default {
 	name: 'IndexPage',
     components: {
         MyCalendar,
+		CalendarDaily
     },
     created() {
         this.meetingRoom = this.$store.getters.meetingRoom;
