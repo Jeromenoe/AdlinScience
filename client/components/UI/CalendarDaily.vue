@@ -101,12 +101,17 @@ import CustomButton from '@/components/UI/CustomButton';
       },
       mouseMove (tms) {
 		
-		  this.previousTime++;
-		  if (this.previousTime < 10) {
-			  return ;
-		  } 
-		  this.previousTime = 0;
-        const mouse = this.toTime(tms);
+		if (this.previousTime == this.roundTime(this.toTime(tms))) 
+		{
+			return;
+		}
+		this.previousTime = this.roundTime(this.toTime(tms));
+	
+		  this.realMouseMove(tms);
+        
+      },
+		realMouseMove(tms) {
+		const mouse = this.toTime(tms);
 		
         if (this.dragEvent && this.dragTime !== null) {
           const start = this.dragEvent.start
@@ -148,7 +153,7 @@ import CustomButton from '@/components/UI/CustomButton';
           this.createEvent.start = (newMin > min) ? newMin : min;
           this.createEvent.end = (newMax < max) ? newMax : max;
         }
-      },
+		},
       endDrag () {
         this.dragTime = null
         this.dragEvent = null
