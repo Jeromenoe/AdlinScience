@@ -81,6 +81,10 @@ import CustomButton from '@/components/UI/CustomButton';
         }
       },
       startTime (tms) {
+		  var currentDate = new Date().toISOString().split('T')[0];
+		  if (currentDate.localeCompare(this.date) == 1) {
+			  return ;
+		  }
         const mouse = this.toTime(tms)
         if (this.dragEvent && this.dragTime === null) {
 			if (this.dragEvent.movable == false) {
