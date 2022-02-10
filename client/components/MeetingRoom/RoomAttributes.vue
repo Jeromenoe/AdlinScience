@@ -47,8 +47,9 @@ export default {
     flex-direction: column;
     padding: 10px;
     border-radius: 3px;
-    border: 1px solid #ccc;
-    background-color: rgb(228, 228, 228);
+	color: #333;
+    border: 1px solid #337ab7;
+    background-color: rgb(250, 250, 250);
 }
 
 .meeting-room label:hover {
@@ -62,8 +63,8 @@ export default {
 .meeting-room input:checked ~ label {
     background-color: #337ab7;
     border-radius: 4px;
-    border: 1px solid #ccc;
-    color: #eee;
+    border: 1px solid #337ab7;
+    color: rgb(250, 250, 250);
 }
 
 .mr-equipements ul {
