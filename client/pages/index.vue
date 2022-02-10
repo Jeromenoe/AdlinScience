@@ -1,16 +1,14 @@
 <template>
 	<div>
-		<DatePicker />
+		<h1>Hello World !</h1>
 	</div>
 </template>
 
 <script>
-import DatePicker from '@/components/UI/DatePicker'
 
 export default {
   name: 'IndexPage',
   components: {
-	  DatePicker
   }
 }
 </script>
