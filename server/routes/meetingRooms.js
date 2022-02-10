@@ -6,8 +6,8 @@ const path = require('path');
 
 router.get('/meetingRooms', (req, res) => {
 	let rawdata = fs.readFileSync(path.join(__dirname, '../salles.json'));
-	let student = JSON.parse(rawdata);
-	res.json(student);
+	let rooms = JSON.parse(rawdata);
+	res.json(rooms);
 });
 
 module.exports = router;

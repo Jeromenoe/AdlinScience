@@ -44,22 +44,7 @@ import CustomButton from '@/components/UI/CustomButton';
 	},
     data: () => ({
       value: '',
-      events: [{
-		   name: 'Créneau indisponible',
-            color: "#ff0000",
-            start: 1644477300000,
-            end: 1644479100000,
-            timed: true,
-			movable: false,
-	  },
-	  {
-		   name: 'Créneau indisponible',
-            color: "#ff0000",
-            start: 1644487300000,
-            end: 1644489100000,
-            timed: true,
-			movable: false,
-	  }],
+      events: [ ],
       dragEvent: null,
       dragStart: null,
       createEvent: null,
@@ -190,37 +175,30 @@ import CustomButton from '@/components/UI/CustomButton';
       toTime (tms) {
         return new Date(tms.year, tms.month - 1, tms.day, tms.hour, tms.minute).getTime()
       },
-
-      getEvents ({ start, end }) {
-        // const events = []
-        // const min = new Date(`${start.date}T00:00:00`).getTime()
-        // const max = new Date(`${end.date}T23:59:59`).getTime()
-        // const days = (max - min) / 86400000
-        // const eventCount = this.rnd(days, days + 20)
-        // for (let i = 0; i < eventCount; i++) {
-        //   const timed = this.rnd(0, 3) !== 0
-        //   const firstTimestamp = this.rnd(min, max)
-        //   const secondTimestamp = this.rnd(2, timed ? 8 : 288) * 900000
-        //   const start = firstTimestamp - (firstTimestamp % 900000)
-        //   const end = start + secondTimestamp
-        //   events.push({
-        //     name: this.rndElement(this.names),
-        //     color: this.rndElement(this.colors),
-        //     start,
-        //     end,
-        //     timed,
-        //   })
-        // }
-        // this.events = events
-      },
 	  validate() {
 		  if (this.events.length > 0 && this.events[this.events.length - 1].movable == true) {
 			  this.events[this.events.length - 1].movable = false;
 			  this.events[this.events.length - 1].name = "Créneau validé";
 			  this.events[this.events.length - 1].color = "#27be62";
 		  }
+
 	  }
     },
+	created() {
+		const slots = this.$store.getters.slots;
+		const events = []
+		for (const slot of slots) {
+			events.push({
+				name: 'Créneau indisponible',
+				color: "#ff0000",
+				start: slot.dateStart,
+				end: slot.dateEnd,
+				timed: true,
+				movable: false,
+          })
+		}
+		this.events = events;
+	}
   }
 </script>
 
