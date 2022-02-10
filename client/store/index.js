@@ -5,10 +5,7 @@ const url = 'http://localhost:3001/api/'
 const createStore = () => {
 	return new vuex.Store({
 		state: () => ({
-			meetingRoom: {
-				id: 0,
-				name: "test"
-			},
+			meetingRoom: { },
 			meetingRooms: []
 		}),
 		mutations: {
@@ -28,6 +25,7 @@ const createStore = () => {
 						meetingRooms.push({ ...res.data.rooms[key], id: parseInt(key) });
 					}
 					vuexContext.commit('setMeetingRooms', meetingRooms)
+					vuexContext.commit('setMeetingRoom', meetingRooms[0])
 				})
 				.catch(e => context.error(e))
 			},

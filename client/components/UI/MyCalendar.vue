@@ -33,6 +33,8 @@ export default {
 	display: flex;
 	justify-content: center;
 	height: 500px;
+	width: 100%;
+	margin: 40px;
 }
 
 .custom-calendar div {
