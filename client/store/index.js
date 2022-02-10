@@ -6,7 +6,8 @@ const createStore = () => {
 	return new vuex.Store({
 		state: () => ({
 			meetingRoom: { },
-			meetingRooms: []
+			meetingRooms: [],
+			reservationDate: new Date().toISOString().split('T')[0],
 		}),
 		mutations: {
 			setMeetingRoom(state, room) {
@@ -14,6 +15,9 @@ const createStore = () => {
 			},
 			setMeetingRooms(state, rooms) {
 				state.meetingRooms = rooms;
+			},
+			setReservationDate(state, date) {
+				state.reservationDate = date;
 			}
 		},
 		actions: {
@@ -32,6 +36,9 @@ const createStore = () => {
 			setMeetingRoom(vuexContext, room) {
 				vuexContext.commit('setMeetingRoom', room);
 			},
+			setReservationDate(vuexContext, date) {
+				vuexContext.commit('setReservationDate', date);
+			}
 		},
 		getters: {
 			meetingRoom(state) {
@@ -39,6 +46,9 @@ const createStore = () => {
 			},
 			meetingRooms(state) {
 				return state.meetingRooms;
+			},
+			reservationDate(state) {
+				return state.reservationDate;
 			}
 		}
 	})

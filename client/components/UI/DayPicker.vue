@@ -34,13 +34,16 @@
     data() {
       return {
         fromDateMenu: false,
-        fromDateVal: new Date().toISOString().split('T')[0],
+        fromDateVal: '',
       };
     },
     computed: {
       fromDateDisp() {
         return this.fromDateVal;
       },
+    },
+	created() {
+        this.fromDateVal = this.$store.getters.reservationDate;
     },
   };
 </script>

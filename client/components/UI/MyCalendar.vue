@@ -16,14 +16,18 @@ export default {
 	},
 	data() {
 		return {
-			date: new Date().toISOString().split('T')[0],
+			date: '',
 		}
 	},
 	methods: {
 		updateDate(value) {
 			this.date = value;
+			this.$store.dispatch("setReservationDate", value);
 		}
-	}
+	},
+	created() {
+        this.date = this.$store.getters.reservationDate;
+    },
 }
 </script>
 

@@ -43,7 +43,7 @@ export default {
 	padding: 10px;
 	border-radius: 3px;
 	border: 1px solid #ccc;
-	background-color: #ddd;
+	background-color: rgb(228, 228, 228);
 }
 
 .meeting-room label:hover {
