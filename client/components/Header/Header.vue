@@ -33,21 +33,11 @@ export default {
 }
 
 .logo {
-    /* margin: 0 10px;
-    font-size: 1.3rem; */
 	height: 60px;
 }
 
-
-/* .logo a {
-    text-decoration: none;
-    color: white;
-}  */
-
 .adlin-science {
-	/* max-width: 100%; */
 	height: 90%;
 	cursor: pointer;
-	
 }
 </style>

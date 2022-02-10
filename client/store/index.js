@@ -5,7 +5,7 @@ const url = 'http://localhost:3001/api/'
 const createStore = () => {
 	return new vuex.Store({
 		state: () => ({
-			meetingRoom: { },
+			meetingRoom: {},
 			meetingRooms: [],
 			reservationDate: new Date().toISOString().split('T')[0],
 			slots: []
@@ -25,48 +25,25 @@ const createStore = () => {
 			}
 		},
 		actions: {
-			// nuxtServerInit(vuexContext, context) {
-			// 	return axios.get(url + 'meetingRooms')
-			// 	.then(res => {
-			// 		const meetingRooms = [];
-			// 		for (const key in res.data.rooms) {
-			// 			meetingRooms.push({ ...res.data.rooms[key], id: parseInt(key) });
-			// 		}
-			// 		vuexContext.commit('setMeetingRooms', meetingRooms)
-			// 		vuexContext.commit('setMeetingRoom', meetingRooms[0])
-			// 	})
-			// 	.catch(e => context.error(e))
-			// },
-			// nuxtServerInit(vuexContext, context) {
-			// 	return axios.get(url + 'slotsMeetingRooms')
-			// 	.then(res => {
-			// 		const slots = [];
-			// 		for (const key in res.data.slots) {
-			// 			meetingRooms.push({ ...res.data.slots[key], id: parseInt(key) });
-			// 		}
-			// 		vuexContext.commit('setSlots', slots)
-			// 	})
-			// 	.catch(e => context.error(e))
-			// },
-			async nuxtServerInit ({ commit }) {
+			async nuxtServerInit({ commit }) {
 				const meetingRooms = await axios.get(url + 'meetingRooms')
-				.then(res => {
-					const meetingRooms = [];
-					for (const key in res.data.rooms) {
-						meetingRooms.push({ ...res.data.rooms[key], id: parseInt(key) });
-					}
-					return meetingRooms;
-				})
+					.then(res => {
+						const meetingRooms = [];
+						for (const key in res.data.rooms) {
+							meetingRooms.push({ ...res.data.rooms[key], id: parseInt(key) });
+						}
+						return meetingRooms;
+					})
 				commit('setMeetingRooms', meetingRooms);
 				commit('setMeetingRoom', meetingRooms[0]);
 				const slots = await axios.get(url + 'slotsMeetingRooms')
-				.then(res => {
-					const slotsMeetingRooms = [];
-					for (const key in res.data.slots) {
-						slotsMeetingRooms.push({ ...res.data.slots[key], id: parseInt(key) });
-					}
-					return slotsMeetingRooms;
-				})
+					.then(res => {
+						const slotsMeetingRooms = [];
+						for (const key in res.data.slots) {
+							slotsMeetingRooms.push({ ...res.data.slots[key], id: parseInt(key) });
+						}
+						return slotsMeetingRooms;
+					})
 				commit('setSlots', slots);
 			},
 			addSlot(vuexContext, slot) {
