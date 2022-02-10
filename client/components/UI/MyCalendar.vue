@@ -40,7 +40,7 @@ export default {
 	justify-content: center;
 	height: 500px;
 	width: 100%;
-	margin: 40px;
+	margin: 20px;
 }
 
 .custom-calendar div {

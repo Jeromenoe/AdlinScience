@@ -25,7 +25,7 @@ export default {
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 4px;
+  margin: 6px 6px;
   transition-duration: 0.4s;
   cursor: pointer;
 }

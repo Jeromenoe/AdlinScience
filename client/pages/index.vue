@@ -32,7 +32,7 @@ export default {
 
 .reservation h1 {
 	color: #666;
-	margin-bottom: 30px;
+	margin: 20px 0;
 }
 
 .reservation a {

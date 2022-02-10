@@ -1,24 +1,30 @@
 <template>
-  <v-app >
-    <v-main>
-      <v-container>
-        <Nuxt />
-      </v-container>
-    </v-main>
-  </v-app>
+    <v-app>
+        <v-main>
+            <Header />
+            <v-container>
+                <Nuxt />
+            </v-container>
+        </v-main>
+    </v-app>
 </template>
 
 <script>
+import Header from "@/components/Header/Header";
+
 export default {
-  name: 'DefaultLayout',
-}
+    name: "DefaultLayout",
+    components: {
+        Header,
+    },
+};
 </script>
 
 <style>
 html {
-	font-family: 'Open Sans', sans-serif;
+    font-family: "Open Sans", sans-serif;
 }
 body {
-	margin: 0;
+    margin: 0;
 }
 </style>

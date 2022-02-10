@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="mr-container">
         <h1>Salles de réunion</h1>
 		<div class="meeting-rooms">
             <RoomAttributes v-for="room in meetingRooms" :key="room.id" :room="room" @change="changeValue" :checked="room.id == roomId"/>
@@ -43,8 +43,7 @@ export default {
 </script>
 
 <style scoped>
-.container {
-    padding: 10px;
+.mr-container {
 	display: flex;
 	flex-direction: column;
 	align-items: center;
@@ -52,12 +51,12 @@ export default {
 
 .container h1 {
 	padding: 0px;
-	margin: 10px 0px 0px 0px;
+	margin: 20px 0px;
 	color: #666;
 }
 
 .meeting-rooms {
-	margin: 20px;
+	/* margin: 20px; */
 	width: 80%;
 	display: flex;
 	flex-direction: column;
