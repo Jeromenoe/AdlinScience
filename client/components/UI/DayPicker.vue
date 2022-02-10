@@ -23,6 +23,7 @@
 				v-model="fromDateVal"
 				no-title
 				@input="fromDateMenu = false"
+				v-on:input="$emit('input', $event)"
 			></v-date-picker>
 			</v-menu>
 		</v-layout>
@@ -33,7 +34,7 @@
     data() {
       return {
         fromDateMenu: false,
-        fromDateVal: null,
+        fromDateVal: new Date().toISOString().split('T')[0],
       };
     },
     computed: {

@@ -1,8 +1,8 @@
 <template>
     <div class='custom-calendar'>
 		<div>
-			<DayPicker/>
-			<v-calendar-daily class="calendar"></v-calendar-daily>
+			<DayPicker @input="updateDate"/>
+			<v-calendar-daily class="calendar" :start="date"></v-calendar-daily>
 		</div>
     </div>
 </template>
@@ -13,6 +13,16 @@ import DayPicker from '@/components/UI/DayPicker'
 export default {
 	components: {
 		DayPicker
+	},
+	data() {
+		return {
+			date: new Date().toISOString().split('T')[0],
+		}
+	},
+	methods: {
+		updateDate(value) {
+			this.date = value;
+		}
 	}
 }
 </script>
