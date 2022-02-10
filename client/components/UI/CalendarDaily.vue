@@ -1,7 +1,7 @@
 <template>
   <v-row class="fill-height">
     <v-col>
-      <v-sheet height="600">
+      <v-sheet height="600" style="display:flex; flex-direction: column; align-content: center;">
         <v-calendar
 		:start="date"
           ref="calendar"
@@ -15,6 +15,7 @@
           @mousemove:time="mouseMove"
           @mouseup:time="endDrag"
           @mouseleave.native="cancelDrag"
+		  style="border: 1px solid #eee"
         >
           <template v-slot:event="{ event, timed, eventSummary }">
             <div
@@ -28,17 +29,23 @@
             ></div>
           </template>
         </v-calendar>
+        <CustomButton @click="validate()" btnStyle="validate" style="margin-top: 20px">Valider</CustomButton>
       </v-sheet>
     </v-col>
   </v-row>
 </template>
 
 <script>
+import CustomButton from '@/components/UI/CustomButton';
+
   export default {
+	components: {
+		CustomButton
+	},
     data: () => ({
       value: '',
       events: [{
-		   name: 'Unavailable',
+		   name: 'Créneau indisponible',
             color: "#ff0000",
             start: 1644477300000,
             end: 1644479100000,
@@ -46,7 +53,7 @@
 			movable: false,
 	  },
 	  {
-		   name: 'Unavailable',
+		   name: 'Créneau indisponible',
             color: "#ff0000",
             start: 1644487300000,
             end: 1644489100000,
@@ -202,6 +209,13 @@
         // }
         // this.events = events
       },
+	  validate() {
+		  if (this.events.length > 0 && this.events[this.events.length - 1].movable == true) {
+			  this.events[this.events.length - 1].movable = false;
+			  this.events[this.events.length - 1].name = "Créneau validé";
+			  this.events[this.events.length - 1].color = "#27be62";
+		  }
+	  }
     },
   }
 </script>
