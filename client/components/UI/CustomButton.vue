@@ -33,11 +33,11 @@ export default {
 .validate {
   background-color: white; 
   color: black; 
-  border: 1px solid #008CBA;
+  border: 1px solid #0070BA;
 }
 
 .validate:hover {
-  background-color: #008CBA;
+  background-color: #0070BA;
   color: white;
 }
 

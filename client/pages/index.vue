@@ -39,14 +39,14 @@ export default {
 	text-decoration: none;
 	padding: 3px;
 	background-color: white; 
-	color: #008CBA; 
-	border: 1px solid #008CBA;
+	color: #0070BA; 
+	border: 1px solid #0070BA;
 	border-radius: 2px;
 	transition-duration: 0.4s;
 }
 
 .reservation a:hover {
-  background-color: #008CBA;
+  background-color: #0070BA;
   color: white;
 }
 

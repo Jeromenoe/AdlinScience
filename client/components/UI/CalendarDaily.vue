@@ -29,7 +29,7 @@
             ></div>
           </template>
         </v-calendar>
-        <CustomButton @click="validate()" btnStyle="validate" style="margin-top: 20px">Valider</CustomButton>
+        <CustomButton @click="validate()" btnStyle="validate" style="margin-top: 20px;">Valider</CustomButton>
       </v-sheet>
     </v-col>
   </v-row>
@@ -50,6 +50,7 @@ import CustomButton from '@/components/UI/CustomButton';
       createEvent: null,
       createStart: null,
       extendOriginal: null,
+	  previousTime: 0,
     }),
 	props: {
 		date: {
@@ -84,7 +85,7 @@ import CustomButton from '@/components/UI/CustomButton';
           this.createStart = this.roundTime(mouse)
           this.createEvent = {
             name: 'Créneau actuel',
-            color: '#0000ff',
+            color: '#0070BA',
             start: this.createStart,
             end: this.createStart,
             timed: true,
@@ -99,7 +100,13 @@ import CustomButton from '@/components/UI/CustomButton';
         this.extendOriginal = event.end
       },
       mouseMove (tms) {
-        const mouse = this.toTime(tms)
+		
+		  this.previousTime++;
+		  if (this.previousTime < 10) {
+			  return ;
+		  } 
+		  this.previousTime = 0;
+        const mouse = this.toTime(tms);
 		
         if (this.dragEvent && this.dragTime !== null) {
           const start = this.dragEvent.start
