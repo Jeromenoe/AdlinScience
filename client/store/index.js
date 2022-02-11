@@ -39,6 +39,9 @@ const createStore = () => {
 				const slots = await axios.get(url + 'slotsMeetingRooms', { params: { name: meetingRooms[0].name } })
 					.then(res => {
 						const slotsMeetingRooms = [];
+						if (res.data.slots) {
+							return [];
+						}
 						for (const key in res.data) {
 							slotsMeetingRooms.push({ ...res.data[key], id: parseInt(key) });
 						}
@@ -60,6 +63,9 @@ const createStore = () => {
 				const slots = await axios.get(url + 'slotsMeetingRooms', { params: { name } })
 					.then(res => {
 						const slotsMeetingRooms = [];
+						if (res.data.slots) {
+							return [];
+						}
 						for (const key in res.data) {
 							slotsMeetingRooms.push({ ...res.data[key], id: parseInt(key) });
 						}
