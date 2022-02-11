@@ -9,8 +9,15 @@ const path = require('path');
  */
 router.get('/slotsMeetingRooms', (req, res) => {
 	let rawdata = fs.readFileSync(path.join(__dirname, '../resources/slotsMeetingRooms.json'));
-	let slots = JSON.parse(rawdata).slots.filter(slot => slot.name.localeCompare(req.query.name) == 0);
-	res.json(slots);
+	let data = null;
+	try {
+		data = JSON.parse(rawdata).slots.filter(slot => slot.name.localeCompare(req.query.name) == 0);
+	} catch {
+		data = {
+			slots: []
+		}
+	}
+	res.json(data);
 });
 
 
@@ -72,6 +79,7 @@ router.post('/slotsMeetingRooms', (req, res) => {
 						res.status(200).json({ message: 'New Data Added' });
 					});
 				} catch (error) {
+					console.log(error);
 					res.status(400).json(error);
 					return;
 				}
@@ -82,6 +90,7 @@ router.post('/slotsMeetingRooms', (req, res) => {
 			}
 		}
 	} catch (error) {
+		console.log(error);
 		res.status(400).json(error);
 	}
 });

@@ -5,7 +5,7 @@
             <span class="current-room">Réservation pour {{ meetingRoom.name }}</span>
             <nuxt-link to="/reservation">Salles</nuxt-link>
         </div>
-        <MyCalendar />
+        <MyCalendar :slots="slots" :roomName="meetingRoom.name"/>
     </div>
 </template>
 
@@ -16,9 +16,16 @@ export default {
     components: {
         MyCalendar,
     },
-    created() {
-        this.meetingRoom = this.$store.getters.meetingRoom;
+    computed: {
+		meetingRoom() {
+			return  this.$store.getters.meetingRoom;
+		},
+		slots() {
+			return this.$store.getters.slots;
+		}
     },
+	created() {
+	}
 };
 </script>
 

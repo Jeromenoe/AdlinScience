@@ -2,7 +2,7 @@
     <div class='custom-calendar'>
         <div>
             <DayPicker @input="updateDate" />
-            <CalendarDaily class="calendar" :date="date" />
+            <CalendarDaily :slots="slots" :roomName="roomName" class="calendar" :date="date" />
         </div>
     </div>
 </template>
@@ -21,6 +21,16 @@ export default {
             date: "",
         };
     },
+	props: {
+		slots: {
+			type: Array,
+			required: true,
+		},
+		roomName: {
+			type: String,
+			required: true
+		}
+	},
     methods: {
         updateDate(value) {
             this.date = value;

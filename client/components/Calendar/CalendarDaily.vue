@@ -1,7 +1,8 @@
 <template>
     <v-row class="fill-height">
         <v-col>
-            <v-sheet height="600" 
+            <v-sheet 
+			height="600" 
 			style="display:flex; flex-direction: column; align-content: center;">
                 <v-calendar 
 				:start="date" 
@@ -19,10 +20,15 @@
 				style="border: 1px solid #eee">
                     <template v-slot:event="{ event, timed, eventSummary }">
                         <div class="v-event-draggable" v-html="eventSummary()"></div>
-                        <div v-if="timed && event.movable == true" class="v-event-drag-bottom" @mousedown.stop="extendBottom(event)"></div>
+                        <div 
+						v-if="timed && event.movable == true" 
+						class="v-event-drag-bottom" 
+						@mousedown.stop="extendBottom(event)"></div>
                     </template>
                 </v-calendar>
-                <CustomButton @click="validate()" btnStyle="validate" style="margin-top: 20px;">Valider</CustomButton>
+                <CustomButton @click="validate()" 
+				btnStyle="validate" 
+				style="margin-top: 20px;">Valider</CustomButton>
             </v-sheet>
         </v-col>
     </v-row>
@@ -30,6 +36,7 @@
 
 <script>
 import CustomButton from "@/components/UI/CustomButton";
+import axios from "axios";
 
 export default {
     components: {
@@ -49,6 +56,19 @@ export default {
         date: {
             type: String,
             required: true,
+        },
+        slots: {
+            type: Array,
+            required: true,
+        },
+        roomName: {
+            type: String,
+            required: true,
+        },
+    },
+    watch: {
+        slots(slots) {
+            this.initEvents(slots);
         },
     },
     methods: {
@@ -83,7 +103,7 @@ export default {
                     name: "Créneau actuel",
                     color: "#0070BA",
                     start: this.createStart,
-                    end: this.createStart + (15 * 60 * 1000),
+                    end: this.createStart + 15 * 60 * 1000,
                     timed: true,
                     movable: true,
                 };
@@ -105,7 +125,6 @@ export default {
         },
         realMouseMove(tms) {
             const mouse = this.toTime(tms);
-
             if (this.dragEvent && this.dragTime !== null) {
                 const start = this.dragEvent.start;
                 const end = this.dragEvent.end;
@@ -154,7 +173,10 @@ export default {
                 }
                 this.createEvent.start = newMin > min ? newMin : min;
                 newMax = newMax < max ? newMax : max;
-				this.createEvent.end = newMax == this.createEvent.start ? newMax + (15 * 60 * 1000) : newMax;
+                this.createEvent.end =
+                    newMax == this.createEvent.start
+                        ? newMax + 15 * 60 * 1000
+                        : newMax;
             }
         },
         endDrag() {
@@ -204,23 +226,33 @@ export default {
                 this.events[this.events.length - 1].movable = false;
                 this.events[this.events.length - 1].name = "Créneau validé";
                 this.events[this.events.length - 1].color = "#096A09";
+                const { start: dateStart, end: dateEnd } =
+                    this.events[this.events.length - 1];
+                const newEvent = { name: this.roomName, dateStart, dateEnd };
+                axios.post(
+                        "http://localhost:3001/api/slotsMeetingRooms",
+                        newEvent
+                    )
+                    .then((response) => console.log(response));
             }
+        },
+        initEvents(slots) {
+            const events = [];
+            for (const slot of slots) {
+                events.push({
+                    name: "Créneau indisponible",
+                    color: "#ff0000",
+                    start: parseInt(slot.dateStart),
+                    end: parseInt(slot.dateEnd),
+                    timed: true,
+                    movable: false,
+                });
+            }
+            this.events = events;
         },
     },
     created() {
-        const slots = this.$store.getters.slots;
-        const events = [];
-        for (const slot of slots) {
-            events.push({
-                name: "Créneau indisponible",
-                color: "#ff0000",
-                start: slot.dateStart,
-                end: slot.dateEnd,
-                timed: true,
-                movable: false,
-            });
-        }
-        this.events = events;
+        this.initEvents(this.slots);
     },
 };
 </script>
@@ -232,9 +264,9 @@ export default {
 .v-event-timed {
     user-select: none;
     -webkit-user-select: none;
-	-moz-user-select: none; 
-	-webkit-user-select: none; 
-	-ms-user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 .v-event-drag-bottom {
     position: absolute;

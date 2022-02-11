@@ -36,11 +36,11 @@ const createStore = () => {
 					})
 				commit('setMeetingRooms', meetingRooms);
 				commit('setMeetingRoom', meetingRooms[0]);
-				const slots = await axios.get(url + 'slotsMeetingRooms')
+				const slots = await axios.get(url + 'slotsMeetingRooms', { params: { name: meetingRooms[0].name } })
 					.then(res => {
 						const slotsMeetingRooms = [];
-						for (const key in res.data.slots) {
-							slotsMeetingRooms.push({ ...res.data.slots[key], id: parseInt(key) });
+						for (const key in res.data) {
+							slotsMeetingRooms.push({ ...res.data[key], id: parseInt(key) });
 						}
 						return slotsMeetingRooms;
 					})
@@ -51,9 +51,21 @@ const createStore = () => {
 			},
 			setMeetingRoom(vuexContext, room) {
 				vuexContext.commit('setMeetingRoom', room);
+				vuexContext.dispatch('setSlots', room.name);
 			},
 			setReservationDate(vuexContext, date) {
 				vuexContext.commit('setReservationDate', date);
+			},
+			async setSlots(vuexContext, name) {
+				const slots = await axios.get(url + 'slotsMeetingRooms', { params: { name } })
+					.then(res => {
+						const slotsMeetingRooms = [];
+						for (const key in res.data) {
+							slotsMeetingRooms.push({ ...res.data[key], id: parseInt(key) });
+						}
+						return slotsMeetingRooms;
+					})
+				vuexContext.commit('setSlots', slots);
 			}
 		},
 		getters: {
