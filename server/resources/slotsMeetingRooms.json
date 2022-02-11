@@ -1,14 +1,1 @@
-{
-	"slots": [
-		{
-			"roomName": "Salle #1",
-			"dateStart": 1644477300000,
-			"dateEnd": 1644479100000
-		},
-		{
-			"roomName": "Salle #1",
-			"dateStart": 1644487300000,
-			"dateEnd": 1644489100000
-		}
-	]
-}
+{"slots":[{"roomName":"Salle #1","dateStart":1644477300000,"dateEnd":1644479100000},{"roomName":"Salle #1","dateStart":1644487300000,"dateEnd":1644489100000},{"name":"Salle #1","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #1","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #1","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #1","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #1","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #1","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #1","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #1","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #1","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #2","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle #3","dateStart":1644537600000,"dateEnd":1645537600000},{"name":"Salle Okjsdkso","dateStart":1644537600000,"dateEnd":1645537600000}]}
