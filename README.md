@@ -6,7 +6,9 @@ The projet doesn't work with node version 17+
 
 To downgrade version if needed :
 
+
 nvm install v16.13.2
+
 nvm use v16.13.2
 
 
