@@ -1,13 +1,8 @@
 const express = require('express');
 const router = express.Router();
-const fs = require('fs');
-const path = require('path');
+const meetingRoomsCtrl = require('../controllers/meetingRooms');
 
 
-router.get('/meetingRooms', (req, res) => {
-	let rawdata = fs.readFileSync(path.join(__dirname, '../resources/salles.json'));
-	let rooms = JSON.parse(rawdata);
-	res.json(rooms);
-});
+router.get('/meetingRooms', meetingRoomsCtrl.getRoom);
 
 module.exports = router;
