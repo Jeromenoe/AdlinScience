@@ -1,17 +1,14 @@
 const fs = require('fs');
 const path = require('path');
+const Room = require('../models/Room');
 
 
 // Get slots of a particular meeting room
-exports.getSlots = (req, res) => {
-	let rawdata = fs.readFileSync(path.join(__dirname, '../resources/slotsMeetingRooms.json'));
-	let data = null;
-	try {
-		data = JSON.parse(rawdata).slots.filter(slot => slot.name.localeCompare(req.query.name) == 0);
-	} catch {
-		data = {
-			slots: []
-		}
+exports.getSlots = async (req, res) => {
+	var room = await Room.findOne({ name: req.query.name }).exec();
+	let data = [];
+	if (room) {
+		data = room.slots;
 	}
 	res.json(data);
 }
@@ -43,11 +40,11 @@ exports.createSlot = (req, res) => {
 		}
 
 		if (rooms.filter(room => slot.name.localeCompare(room.name) == 0).length > 0) {
-			fs.readFile(path.join(__dirname, '../resources/slotsMeetingRooms.json'), function (err, dataFile) {
+			fs.readFile(path.join(__dirname, '../resources/slotsMeetingRooms.json'), async function (err, dataFile) {
 				try {
-
 					if (err) throw { message: "Couldn't read file"};
 					var data = {};
+					// If the file is empty
 					try {
 						data = JSON.parse(dataFile);
 					} catch {
@@ -55,20 +52,33 @@ exports.createSlot = (req, res) => {
 							slots: []
 						}
 					}
-					data.slots.filter(elem => slot.name.localeCompare(elem.name) == 0)
-					.forEach(elem => {
-						if ((slot.dateStart >= elem.dateStart && slot.dateStart < elem.dateEnd) ||
-							(slot.dateEnd > elem.dateStart && slot.dateEnd <= elem.dateEnd)) {
-							throw {
-								message: "Already a slot in this period of time"
+					var room = await Room.findOne({ name: slot.name }).exec();
+					console.log(room);
+					if (room) {
+						room.slots.forEach(elem => {
+							if ((slot.dateStart >= elem.dateStart && slot.dateStart < elem.dateEnd) ||
+								(slot.dateEnd > elem.dateStart && slot.dateEnd <= elem.dateEnd)) {
+								throw {
+									message: "Already a slot in this period of time"
+								}
 							}
-						}
-					})
-					data.slots.push(slot);
-					fs.writeFile(path.join(__dirname, '../resources/slotsMeetingRooms.json'), JSON.stringify(data), (err) => {
-						if (err) throw { message: "Couldn't write on file" };
-						res.status(200).json({ message: 'New Data Added' });
-					});
+						})
+						room.slots.push({
+							userName: 'toto',
+							dateStart: slot.dateStart,
+							dateEnd: slot.dateEnd
+						})
+					} else {
+						room = new Room({
+							name: slot.name,
+							slots: [{
+								userName: 'toto',
+								dateStart: slot.dateStart,
+								dateEnd: slot.dateEnd
+							}]
+						});
+					}
+					await room.save();
 				} catch (error) {
 					console.log(error);
 					res.status(400).json(error);
