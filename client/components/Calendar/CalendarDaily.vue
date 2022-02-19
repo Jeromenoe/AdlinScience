@@ -229,9 +229,18 @@ export default {
                 const { start: dateStart, end: dateEnd } =
                     this.events[this.events.length - 1];
                 const newEvent = { name: this.roomName, dateStart, dateEnd };
+				const data = Object.keys(newEvent)
+					.map((key, index) => key + '=' + encodeURIComponent(newEvent[key]))
+					.join('&');
                 axios.post(
-                        "http://localhost:3001/api/slotsMeetingRooms",
-                        newEvent
+                        // "http://localhost:3001/api/slotsMeetingRooms",
+						"https://heroku-adlin-science-api.herokuapp.com/api/slotsMeetingRooms",
+                        data,
+						{
+							headers: {
+								"Content-Type": 'application/x-www-form-urlencoded'
+							}
+						}
                     )
                     .then((response) => console.log(response));
             }

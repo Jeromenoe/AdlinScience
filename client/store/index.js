@@ -1,7 +1,8 @@
 import vuex from 'vuex';
 import axios from 'axios';
 
-const url = 'http://localhost:3001/api/'
+// const url = 'http://localhost:3001/api/'
+const url = 'https://heroku-adlin-science-api.herokuapp.com/api/'
 const createStore = () => {
 	return new vuex.Store({
 		state: () => ({
