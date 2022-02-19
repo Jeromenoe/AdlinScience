@@ -53,7 +53,6 @@ exports.createSlot = (req, res) => {
 						}
 					}
 					var room = await Room.findOne({ name: slot.name }).exec();
-					console.log(room);
 					if (room) {
 						room.slots.forEach(elem => {
 							if ((slot.dateStart >= elem.dateStart && slot.dateStart < elem.dateEnd) ||
