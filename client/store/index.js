@@ -1,8 +1,6 @@
 import vuex from 'vuex';
 import axios from 'axios';
 
-// const url = 'http://localhost:3001/api/'
-const url = 'https://heroku-adlin-science-api.herokuapp.com/api/'
 const createStore = () => {
 	return new vuex.Store({
 		state: () => ({
@@ -27,7 +25,7 @@ const createStore = () => {
 		},
 		actions: {
 			async nuxtServerInit({ commit }) {
-				const meetingRooms = await axios.get(url + 'meetingRooms')
+				const meetingRooms = await axios.get(process.env.API_URL + 'meetingRooms')
 					.then(res => {
 						const meetingRooms = [];
 						for (const key in res.data.rooms) {
@@ -37,7 +35,7 @@ const createStore = () => {
 					})
 				commit('setMeetingRooms', meetingRooms);
 				commit('setMeetingRoom', meetingRooms[0]);
-				const slots = await axios.get(url + 'slotsMeetingRooms', { params: { name: meetingRooms[0].name } })
+				const slots = await axios.get(process.env.API_URL + 'slotsMeetingRooms', { params: { name: meetingRooms[0].name } })
 					.then(res => {
 						const slotsMeetingRooms = [];
 						if (res.data.slots) {
@@ -61,7 +59,7 @@ const createStore = () => {
 				vuexContext.commit('setReservationDate', date);
 			},
 			async setSlots(vuexContext, name) {
-				const slots = await axios.get(url + 'slotsMeetingRooms', { params: { name } })
+				const slots = await axios.get(process.env.API_URL + 'slotsMeetingRooms', { params: { name } })
 					.then(res => {
 						const slotsMeetingRooms = [];
 						if (res.data.slots) {

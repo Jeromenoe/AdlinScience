@@ -7,15 +7,13 @@ const meetingRoomsRoutes = require('./routes/meetingRooms.js');
 const slotsMeetingRoomsRoutes = require('./routes/slotsMeetingRooms.js');
 
 const app = express();
-const URL = "https://heroku-adlin-science.herokuapp.com/"
-// const URL = "http://localhost:3000/"
 
 // Initialize DB
 require('./initDB')();
 
 // ALLOW API TO BE CALLED
 app.use(function (req, res, next) {
-    res.setHeader('Access-Control-Allow-Origin', URL);
+    res.setHeader('Access-Control-Allow-Origin', process.env.CLIENT_URL);
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
     res.setHeader('Access-Control-Allow-Credentials', true);

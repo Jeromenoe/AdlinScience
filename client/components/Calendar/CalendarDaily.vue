@@ -232,9 +232,9 @@ export default {
 				const data = Object.keys(newEvent)
 					.map((key, index) => key + '=' + encodeURIComponent(newEvent[key]))
 					.join('&');
+				var url = process.env.API_URL + 'slotsMeetingRooms'
                 axios.post(
-                        // "http://localhost:3001/api/slotsMeetingRooms",
-						"https://heroku-adlin-science-api.herokuapp.com/api/slotsMeetingRooms",
+                        url,
                         data,
 						{
 							headers: {
@@ -263,6 +263,7 @@ export default {
     created() {
         this.initEvents(this.slots);
     },
+	
 };
 </script>
 

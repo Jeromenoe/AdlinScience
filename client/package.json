@@ -7,9 +7,10 @@
     "build": "nuxt build",
     "start": "nuxt start",
     "generate": "nuxt generate",
-	"heroku-postbuild": "npm run build"
+    "heroku-postbuild": "npm run build"
   },
   "dependencies": {
+    "@nuxtjs/dotenv": "^1.4.1",
     "axios": "^0.25.0",
     "core-js": "^3.19.3",
     "nuxt": "^2.15.8",

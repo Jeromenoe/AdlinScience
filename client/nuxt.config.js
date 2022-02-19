@@ -30,7 +30,8 @@ export default {
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-	'@nuxtjs/vuetify'
+	'@nuxtjs/vuetify',
+	'@nuxtjs/dotenv',
   ],
   
 
@@ -40,5 +41,9 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+
+  env: {
+    API_URL: process.env.API_URL
+  },
 }
