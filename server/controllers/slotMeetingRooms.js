@@ -33,7 +33,9 @@ exports.createSlot = async (req, res) => {
 				}
 			}
 		}
-		if (slot.dateStart < currentDate || slot.dateEnd > timestampMax || slot.dateStart >= slot.dateEnd) {
+		if (slot.dateStart < currentDate ||
+			slot.dateEnd > timestampMax ||
+			slot.dateStart >= slot.dateEnd) {
 			throw {
 				message: "Wrong dates"
 			}
@@ -44,7 +46,8 @@ exports.createSlot = async (req, res) => {
 			if (room) {
 				room.slots.forEach(elem => {
 					if ((slot.dateStart >= elem.dateStart && slot.dateStart < elem.dateEnd) ||
-						(slot.dateEnd > elem.dateStart && slot.dateEnd <= elem.dateEnd)) {
+						(slot.dateEnd > elem.dateStart && slot.dateEnd <= elem.dateEnd) ||
+						(slot.dateStart < elem.dateStart && slot.dateEnd > elem.dateEnd)) {
 						throw {
 							message: "Already a slot in this period of time"
 						}
