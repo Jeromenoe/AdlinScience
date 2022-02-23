@@ -1,6 +1,6 @@
 <template>
-	<div class='container' style="margin-top: 20px">
-		<v-card style="width:70%; min-width: 415px">
+	<div class='container'>
+		<v-card style="width:100%; min-width: 415px">
 			<v-card-title style="margin-bottom: 10px">
 			Salles de réunion
 			<v-spacer></v-spacer>
@@ -50,7 +50,6 @@
 		</v-card>
 		<div class="buttons">
             <CustomButton @click="validate()" btnStyle="validate">Valider</CustomButton>
-            <CustomButton @click="$emit('cancel')" btnStyle="cancel">Retour</CustomButton>
         </div>
 	</div>
 </template>
@@ -106,6 +105,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+	width: 62%;
 }
 
 .container h1 {

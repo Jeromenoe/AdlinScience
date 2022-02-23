@@ -1,14 +1,13 @@
 <template>
-    <div class="reservation">
+    <div class="reservation" tabindex="0" @keydown.esc="cancel">
         <h1>Réservation de salles</h1>
         <div>
             <span class="current-room">Réservation pour {{ meetingRoom.name }}</span>
-            <!-- <nuxt-link to="/reservation">Salles</nuxt-link> -->
 			<button @click="showRoomPage = !showRoomPage">Salles</button>
         </div>
         <MyCalendar :slots="slots" :roomName="meetingRoom.name"/>
-		<div id="room-page" :style="{ visibility: visibility, opacity: + showRoomPage}">
-			<RoomPage v-if="showRoomPage" v-on:cancel="cancel" />
+		<div  id="room-page" :style="{ visibility: visibility, opacity: + showRoomPage}" @click="cancelOnLeftButton">
+			<RoomPage id="room" v-if="showRoomPage" v-on:cancel="cancel"/>
 		</div>
     </div>
 </template>
@@ -48,7 +47,13 @@ export default {
 	methods: {
 		cancel() {
             this.showRoomPage = false;
-        }
+        },
+		cancelOnLeftButton(event) {
+			var ignoreClickOnMeElement = document.getElementById('room');
+			if (ignoreClickOnMeElement && !ignoreClickOnMeElement.contains(event.target)) {
+				this.cancel();
+			}
+		}
 	}
 };
 </script>
