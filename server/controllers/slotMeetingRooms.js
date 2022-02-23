@@ -18,7 +18,7 @@ exports.getSlots = async (req, res) => {
 exports.createSlot = async (req, res) => {
 	let rawdata = fs.readFileSync(path.join(__dirname, '../resources/salles.json'));
 	let rooms = JSON.parse(rawdata).rooms;
-	let currentDate = new Date(new Date().toISOString().split('T')[0]).getTime();
+	let currentDate = new Date(new Date().toISOString().split('T')[0]).getTime() - (1000 * 60 * 60);
 	let timestampMax = currentDate + (1000 * 60 * 60 * 24 * 1000);
 	let slot = {
 		name: req.body.name,

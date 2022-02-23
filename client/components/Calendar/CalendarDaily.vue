@@ -153,7 +153,7 @@ export default {
                     if (min == mouseRounded) {
                         if (
                             min < this.events[i].end &&
-                            max > this.events[i].end
+                            max >= this.events[i].end
                         ) {
                             if (newMin < this.events[i].end) {
                                 newMin = this.events[i].end;
