@@ -29,16 +29,35 @@
 					<span v-for="equip in item.equipements" :key="equip.name">{{ equip.name }} <br></span>
 				</template>
 				<template v-slot:[`body.append`]>
-					<tr>
+					<tr id="search">
 						<td colspan="3"></td>
-						<td id="capacity-filter">
-							<v-text-field 
-							v-model="capacity"
-							type="number"
-							label="Less than"
-							></v-text-field>
+						<td style="width:130px">
+							<div id="capacity-filter">
+								<v-text-field 
+								v-model="capacityMin"
+								type="number"
+								label="Min"
+								style="margin-right:8px"
+								:min="0"
+								></v-text-field>
+								<v-text-field 
+								v-model="capacityMax"
+								type="number"
+								label="Max"
+								:min="0"
+								></v-text-field>
+							</div>
 						</td>
-						<td colspan="1"></td>
+						<td style="width:240px">
+							<v-select
+							v-model="e6"
+							:items="states"
+							:menu-props="{ maxHeight: '400', offsetY: true, closeOnClick: true }"
+							label="Équipements"
+							multiple
+							append-icon=''
+							></v-select>
+						</td>
 					</tr>
 			</template>
 			</v-data-table>
@@ -69,8 +88,9 @@ export default {
 			page: 1,
 			pageCount: 0,
 			itemsPerPage: 5,
-			capacity: 0,
+			capacityMin: 0,
 			search: '',
+			e6: [],
             headers: [
                 { text: "Nom", value: "name" },
                 { text: "Description", value: "description" },
@@ -88,6 +108,31 @@ export default {
 		rooms() {
 			return this.meetingRooms;
 		},
+		states() {
+			var equipments = [];
+			for (let room of this.meetingRooms) {
+				for (let equipment of room.equipements) {
+					if (!equipments.includes(equipment.name)) {
+						equipments.push(equipment.name);
+					}
+				}
+			}
+			return equipments;
+		},
+		capacityMax: {
+			get() {
+				var capacityMax = 0;
+				for (let room of this.meetingRooms) {
+					if (room.capacity > capacityMax) {
+						capacityMax = room.capacity;
+					}
+				}
+				return capacityMax;
+			},
+			set(newCapacityMax) {
+				return newCapacityMax;
+			}
+		}
 	},
 	methods: {
         validate() {
@@ -127,7 +172,12 @@ export default {
 }
 
 #capacity-filter {
-	width: 130px;
+	display: flex;
+	justify-content: space-between;
+}
+
+#search {
+	background-color: transparent !important;
 }
 
 </style>
