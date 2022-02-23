@@ -13,6 +13,7 @@
 import MyCalendar from "@/components/Calendar/MyCalendar";
 export default {
     name: "IndexPage",
+	transition: 'page',
     components: {
         MyCalendar,
     },
@@ -59,4 +60,14 @@ export default {
 .reservation .current-room {
     margin-right: 10px;
 }
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+
 </style>

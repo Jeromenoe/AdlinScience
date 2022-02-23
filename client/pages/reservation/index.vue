@@ -21,6 +21,7 @@ import RoomAttributes from "@/components/MeetingRoom/RoomAttributes";
 import CustomButton from "@/components/UI/CustomButton";
 
 export default {
+	transition: "page",
     components: {
         RoomAttributes,
         CustomButton,
@@ -82,4 +83,14 @@ export default {
         width: 450px;
     }
 }
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.2s;
+}
+.page-enter,
+.page-leave-active {
+  opacity: 0;
+}
+
 </style>
