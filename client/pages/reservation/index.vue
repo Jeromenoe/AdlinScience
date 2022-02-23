@@ -1,36 +1,53 @@
 <template>
-    <div class="mr-container">
-        <h1>Salles de réunion</h1>
-        <div class="meeting-rooms">
-            <RoomAttributes 
-			v-for="room in meetingRooms" 
-			:key="room.id" 
-			:room="room" 
-			@change="changeValue" 
-			:checked="room.id == roomId" />
-        </div>
-        <div class="mr-buttons">
+	<div class='container'>
+		<h1>Salles de réunion</h1>
+		<v-data-table v-model="selected" :headers="headers" :items="rooms" :single-select="singleSelect" item-key="name" show-select class="elevation-1">
+			<template v-slot:[`item.equipements`]="{ item }">
+				<span v-for="equip in item.equipements" :key="equip.name">{{ equip.name }} <br></span>
+			</template>
+		</v-data-table>
+		<div class="buttons">
             <CustomButton @click="validate()" btnStyle="validate">Valider</CustomButton>
             <CustomButton @click="cancel()" btnStyle="cancel">Retour</CustomButton>
         </div>
-    </div>
+	</div>
 </template>
 
 <script>
-import RoomAttributes from "@/components/MeetingRoom/RoomAttributes";
 import CustomButton from "@/components/UI/CustomButton";
 
 export default {
 	transition: "page",
     components: {
-        RoomAttributes,
         CustomButton,
     },
-    methods: {
+    data() {
+        return {
+            singleSelect: true,
+			selected: [],
+            headers: [
+                { text: "Nom", value: "name" },
+                { text: "Description", value: "description" },
+                { text: "Capacité", value: "capacity" },
+                { text: "Équipements", value: "equipements" },
+            ]
+        };
+    },
+	created() {
+        this.meetingRoom = this.$store.getters.meetingRoom;
+        this.meetingRooms = this.$store.getters.meetingRooms;
+		this.selected = [this.meetingRoom]
+    },
+	computed: {
+		rooms() {
+			return this.meetingRooms;
+		},
+	},
+	methods: {
         validate() {
             this.$store.dispatch(
                 "setMeetingRoom",
-                this.meetingRooms[this.roomId]
+                this.meetingRooms[this.selected[0].id]
             );
             this.$router.push({
                 path: "/",
@@ -38,21 +55,13 @@ export default {
         },
         cancel() {
             this.$router.go(-1);
-        },
-        changeValue(roomId) {
-            this.roomId = roomId;
-        },
-    },
-    created() {
-        this.meetingRoom = this.$store.getters.meetingRoom;
-        this.meetingRooms = this.$store.getters.meetingRooms;
-        this.roomId = this.meetingRoom.id;
-    },
+        }
+	}
 };
 </script>
 
 <style scoped>
-.mr-container {
+.container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -64,24 +73,10 @@ export default {
     color: #666;
 }
 
-.meeting-rooms {
-    width: 80%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    overflow: auto;
-    height: 600px;
-}
-
-.mr-buttons {
+.buttons {
     display: flex;
     justify-content: center;
-}
-
-@media (min-width: 600px) {
-    .meeting-rooms {
-        width: 450px;
-    }
+	margin-top: 15px;
 }
 
 .page-enter-active,
@@ -92,5 +87,4 @@ export default {
 .page-leave-active {
   opacity: 0;
 }
-
 </style>
