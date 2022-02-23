@@ -33,6 +33,17 @@ export default {
     cursor: pointer;
 }
 
+.rooms {
+    background-color: white;
+    color: black;
+    border: 1px solid #0070ba;
+}
+
+.rooms:hover {
+    background-color: #0070ba;
+    color: white;
+}
+
 .validate {
     background-color: white;
     color: black;
@@ -42,6 +53,21 @@ export default {
 .validate:hover {
     background-color: #0070ba;
     color: white;
+}
+
+.validate-room {
+	background-color: #0070ba;
+    color: white;
+    border: 1px solid #0070ba;
+	border-radius: 2px;
+	padding-left: 20px;
+	padding-right: 20px;
+}
+
+.validate-room:hover {
+    background-color: white;
+    color: #0070ba;
+    border: 1px solid #0070ba;
 }
 
 .cancel {

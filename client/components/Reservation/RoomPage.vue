@@ -61,16 +61,17 @@
 					</tr>
 			</template>
 			</v-data-table>
-			<div class="text-center pt-2">
+			<div class="footer">
 				<v-pagination
 					v-model="page"
 					:length="pageCount"
 				></v-pagination>
+				<div class="button">
+					<CustomButton @click="validate()" btnStyle="validate-room">Valider</CustomButton>
+				</div>
 			</div>
 		</v-card>
-		<div class="buttons">
-            <CustomButton @click="validate()" btnStyle="validate">Valider</CustomButton>
-        </div>
+		
 	</div>
 </template>
 
@@ -165,10 +166,18 @@ export default {
     color: #666;
 }
 
-.buttons {
+.footer {
     display: flex;
     justify-content: center;
 	margin-top: 15px;
+	margin-bottom: 15px;
+	position: relative;
+}
+
+.button {
+	position: absolute;
+	right: 20px;
+	margin-top: 2px;
 }
 
 #capacity-filter {
