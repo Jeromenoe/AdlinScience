@@ -7,7 +7,7 @@
 			<v-text-field
 				v-model="search"
 				append-icon="mdi-magnify"
-				label="Search"
+				label="Recherche par nom"
 				single-line
 				hide-details
 			></v-text-field>
@@ -23,6 +23,7 @@
 			class="elevation-1"
 			:items-per-page="itemsPerPage"
 			hide-default-footer
+			@click:row="handleClick"
 			@page-count="pageCount = $event">
 				<template v-slot:[`item.equipements`]="{ item }">
 					<span v-for="equip in item.equipements" :key="equip.name">{{ equip.name }} <br></span>
@@ -90,12 +91,17 @@ export default {
 	},
 	methods: {
         validate() {
-            this.$store.dispatch(
-                "setMeetingRoom",
-                this.meetingRooms[this.selected[0].id]
-            );
+			if (this.selected.length) {
+				this.$store.dispatch(
+					"setMeetingRoom",
+					this.meetingRooms[this.selected[0].id]
+				);
+			}
             this.$emit('cancel');
-        }
+        },
+		handleClick(row) {
+			this.selected = [row];
+		}
 	}
 };
 </script>
