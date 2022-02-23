@@ -1,6 +1,5 @@
 <template>
 	<div class='container' style="margin-top: 20px">
-		<!-- <h1>Salles de réunion</h1> -->
 		<v-card style="width:70%; min-width: 415px">
 			<v-card-title style="margin-bottom: 10px">
 			Salles de réunion
@@ -51,7 +50,7 @@
 		</v-card>
 		<div class="buttons">
             <CustomButton @click="validate()" btnStyle="validate">Valider</CustomButton>
-            <CustomButton @click="cancel()" btnStyle="cancel">Retour</CustomButton>
+            <CustomButton @click="$emit('cancel')" btnStyle="cancel">Retour</CustomButton>
         </div>
 	</div>
 </template>
@@ -60,7 +59,6 @@
 import CustomButton from "@/components/UI/CustomButton";
 
 export default {
-	transition: "page",
     components: {
         CustomButton,
     },
@@ -97,12 +95,7 @@ export default {
                 "setMeetingRoom",
                 this.meetingRooms[this.selected[0].id]
             );
-            this.$router.push({
-                path: "/",
-            });
-        },
-        cancel() {
-            this.$router.go(-1);
+            this.$emit('cancel');
         }
 	}
 };
@@ -131,12 +124,4 @@ export default {
 	width: 130px;
 }
 
-.page-enter-active,
-.page-leave-active {
-  transition: opacity 0.2s;
-}
-.page-enter,
-.page-leave-active {
-  opacity: 0;
-}
 </style>

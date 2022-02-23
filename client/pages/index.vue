@@ -3,29 +3,52 @@
         <h1>Réservation de salles</h1>
         <div>
             <span class="current-room">Réservation pour {{ meetingRoom.name }}</span>
-            <nuxt-link to="/reservation">Salles</nuxt-link>
+            <!-- <nuxt-link to="/reservation">Salles</nuxt-link> -->
+			<button @click="showRoomPage = !showRoomPage">Salles</button>
         </div>
         <MyCalendar :slots="slots" :roomName="meetingRoom.name"/>
+		<div id="room-page" :style="{ visibility: visibility, opacity: + showRoomPage}">
+			<RoomPage v-if="showRoomPage" v-on:cancel="cancel" />
+		</div>
     </div>
 </template>
 
 <script>
 import MyCalendar from "@/components/Calendar/MyCalendar";
+import RoomPage from "@/components/Reservation/RoomPage";
+
 export default {
     name: "IndexPage",
 	transition: 'page',
     components: {
         MyCalendar,
+		RoomPage,
     },
+	data() {
+		return {
+			showRoomPage: false,
+		}
+	},
     computed: {
 		meetingRoom() {
 			return  this.$store.getters.meetingRoom;
 		},
 		slots() {
 			return this.$store.getters.slots;
+		},
+		visibility() {
+			if (this.showRoomPage) {
+				return 'visible';
+			}
+			return 'hidden';
 		}
     },
 	created() {
+	},
+	methods: {
+		cancel() {
+            this.showRoomPage = false;
+        }
 	}
 };
 </script>
@@ -42,8 +65,7 @@ export default {
     margin: 20px 0;
 }
 
-.reservation a {
-    text-decoration: none;
+.reservation button {
     padding: 3px;
     background-color: white;
     color: #0070ba;
@@ -52,7 +74,7 @@ export default {
     transition-duration: 0.4s;
 }
 
-.reservation a:hover {
+.reservation button:hover {
     background-color: #0070ba;
     color: white;
 }
@@ -68,6 +90,20 @@ export default {
 .page-enter,
 .page-leave-active {
   opacity: 0;
+}
+
+
+#room-page {
+	transition:visibility 0.2s linear,opacity 0.2s linear;
+	background-color: rgba(0, 0, 0, 0.7);
+	position: absolute;
+	left: 0; 
+	top: 0; 
+	width: 100%; 
+	height:100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 }
 
 </style>
