@@ -17,6 +17,16 @@ export default {
     components: {
         Header,
     },
+	data() {
+      return {
+        title: 'Adlin Science'
+      }
+    },
+    head() {
+      return {
+        title: this.title,
+      }
+    }
 };
 </script>
 
