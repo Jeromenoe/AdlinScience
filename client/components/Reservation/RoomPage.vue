@@ -7,7 +7,7 @@
 			<v-text-field
 				v-model="search"
 				append-icon="mdi-magnify"
-				label="Recherche par nom"
+				label="Recherche"
 				single-line
 				hide-details
 			></v-text-field>
@@ -18,6 +18,7 @@
 			:items="rooms"
 			:single-select="singleSelect"
 			:page.sync="page"
+			:search="search"
 			item-key="name"
 			show-select
 			class="elevation-1"
