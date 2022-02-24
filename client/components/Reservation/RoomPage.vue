@@ -51,7 +51,7 @@
 						<td style="width:240px">
 							<v-select
 							v-model="e6"
-							:items="states"
+							:items="equipments"
 							:menu-props="{ maxHeight: '400', offsetY: true, closeOnClick: true }"
 							label="Équipements"
 							multiple
@@ -90,7 +90,9 @@ export default {
 			pageCount: 0,
 			itemsPerPage: 5,
 			capacityMin: 0,
+			capacityMax: 0,
 			search: '',
+			rooms: [],
 			e6: [],
             headers: [
                 { text: "Nom", value: "name" },
@@ -103,13 +105,23 @@ export default {
 	created() {
         this.meetingRoom = this.$store.getters.meetingRoom;
         this.meetingRooms = this.$store.getters.meetingRooms;
-		this.selected = [this.meetingRoom]
+		this.selected = [this.meetingRoom];
+		this.rooms = this.meetingRooms;
+		this.capacityMax = this.getCapacityMax();
     },
-	computed: {
-		rooms() {
-			return this.meetingRooms;
+	watch: {
+		capacityMin: function () {
+			this.rooms = this.getRoomsWithFilters();
 		},
-		states() {
+		capacityMax: function () {
+			this.rooms = this.getRoomsWithFilters();
+		},
+		e6: function () {
+			this.rooms = this.getRoomsWithFilters();
+		}
+	},
+	computed: {
+		equipments() {
 			var equipments = [];
 			for (let room of this.meetingRooms) {
 				for (let equipment of room.equipements) {
@@ -119,20 +131,6 @@ export default {
 				}
 			}
 			return equipments;
-		},
-		capacityMax: {
-			get() {
-				var capacityMax = 0;
-				for (let room of this.meetingRooms) {
-					if (room.capacity > capacityMax) {
-						capacityMax = room.capacity;
-					}
-				}
-				return capacityMax;
-			},
-			set(newCapacityMax) {
-				return newCapacityMax;
-			}
 		}
 	},
 	methods: {
@@ -147,6 +145,32 @@ export default {
         },
 		handleClick(row) {
 			this.selected = [row];
+		},
+		getRoomsWithFilters() {
+			var roomsFiltered = [];
+			roomsFiltered = this.meetingRooms.filter((room) => {
+				if (room.capacity >= this.capacityMin
+					&& room.capacity <= this.capacityMax) {
+						var roomEquip = room.equipements.map((item) => item.name);
+						for (let filteredEquip of this.e6) {
+							if(!roomEquip.includes(filteredEquip)) {
+								return false;
+							}
+						}
+						return true;
+					}
+				return false;
+			})
+			return roomsFiltered;
+		},
+		getCapacityMax() {
+			var capacityMax = 0;
+			for (let room of this.meetingRooms) {
+				if (room.capacity > capacityMax) {
+					capacityMax = room.capacity;
+				}
+			}
+			return capacityMax;
 		}
 	}
 };
