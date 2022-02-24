@@ -1,10 +1,10 @@
 <template>
     <v-app>
         <v-main>
+			<div style="height:100%; width:100%">
             <Header />
-            <v-container>
-                <Nuxt />
-            </v-container>
+            <Nuxt />
+			</div>
         </v-main>
     </v-app>
 </template>
