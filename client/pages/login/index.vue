@@ -1,8 +1,8 @@
 <template>
-    <div class='container' v-if="mount">
-		<div style="width:33%;">
-			<v-card >
-				<v-toolbar dark color="primary">
+    <div class='container'>
+		<div>
+			<v-card width="400px">
+				<v-toolbar dark color="primary" height="60px">
 					<v-toolbar-title>Connexion</v-toolbar-title>
 				</v-toolbar>
 				<v-card-text style="padding-bottom: 2px">
@@ -23,14 +23,6 @@
 <script>
 export default {
     name: "Login",
-	data() {
-		return {
-			mount: false
-		}
-	},
-	mounted() {
-		this.mount = true;
-	}
 };
 </script>
 
@@ -40,5 +32,7 @@ export default {
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	z-index: 50;
+	position: relative
 }
 </style>

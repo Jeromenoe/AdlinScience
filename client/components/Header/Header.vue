@@ -18,6 +18,8 @@ export default {
 <style scoped>
 .header-container {
     height: 60px;
+	z-index:100;
+	position: relative;
 }
 
 .the-header {
