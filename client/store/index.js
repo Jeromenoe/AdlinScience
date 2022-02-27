@@ -79,9 +79,10 @@ const createStore = () => {
 			authenticateUser(vuexContext, authData) {
 				var url = process.env.API_URL + 'login'
 				return axios.get(url, { params: { pseudo: authData.pseudo, password: authData.password } })
-				.then(result => vuexContext.commit('setToken', result.idToken))
+				.then(result => {
+					vuexContext.commit('setToken', result.data.token);
+				})
 				.catch(e => console.log(e));
-
 			}
 		},
 		getters: {
@@ -96,6 +97,9 @@ const createStore = () => {
 			},
 			slots(state) {
 				return state.slots;
+			},
+			isAuthenticated(state) {
+				return state.token != null;
 			}
 		}
 	})

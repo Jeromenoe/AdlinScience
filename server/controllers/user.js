@@ -4,6 +4,6 @@ exports.login = (req, res) => {
 	res.status(200).json({
 		pseudo: 'req.query.pseudo',
 		password: 'mypass',
-		idToken: 'ahaha',
+		token: 'ahaha',
 	})
 }

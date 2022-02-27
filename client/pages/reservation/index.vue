@@ -19,6 +19,7 @@ import RoomPage from "@/components/Reservation/RoomPage";
 export default {
     name: "IndexPage",
 	transition: 'page',
+	middleware: 'auth',
     components: {
         MyCalendar,
 		RoomPage,

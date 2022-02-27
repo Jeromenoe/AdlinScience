@@ -5,8 +5,6 @@
 
 <script>
 export default {
-	beforeMount() {
-		this.$router.push('/reservation')
-	}
+	middleware: 'redirection',
 }
 </script>
