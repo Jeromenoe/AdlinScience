@@ -68,8 +68,7 @@ const createStore = () => {
 				vuexContext.commit('setSlots', slots);
 			},
 			authenticateUser(vuexContext, authData) {
-				var url = process.env.API_URL + 'login'
-				return this.$axios.$get(url, { params: { pseudo: authData.pseudo, password: authData.password } })
+				return this.$axios.$get('login', { params: { pseudo: authData.pseudo, password: authData.password } })
 				.then(result => {
 					vuexContext.commit('setToken', result.token);
 					localStorage.setItem('token', result.token);

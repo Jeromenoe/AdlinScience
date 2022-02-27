@@ -8,18 +8,18 @@ exports.login = async (req, res) => {
 		if (!user) {
 			throw 'User not found...';
 		}
-		if (!req.body.password) {
+		if (!req.query.password) {
 			throw 'Password is required...';
 		}
-		if (!await user.matchPassword(req.body.password)) {
+		if (!await user.matchPassword(req.query.password)) {
 			throw 'Invalid password...';
 		}
 		res.status(200).json({
 			token: jwt.sign(
 				{ userId: user._id },
 				'RANDOM_TOKEN_SECRET',
-				{ expiresIn: '24h'}
-				)
+				),
+			expiresIn: 7200
 			})
 	} catch(error) {
 		res.status(400).json({ error });
