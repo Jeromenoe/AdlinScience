@@ -1,5 +1,6 @@
 <template>
     <div class="reservation" tabindex="0" @keydown.esc="cancel">
+		<button id="logout-button" @click="onLogout">Déconnexion</button>
         <h1>Réservation de salles</h1>
         <div>
             <span class="current-room">Réservation pour {{ meetingRoom.name }}</span>
@@ -54,6 +55,10 @@ export default {
 			if (ignoreClickOnMeElement && !ignoreClickOnMeElement.contains(event.target)) {
 				this.cancel();
 			}
+		},
+		onLogout() {
+			this.$store.dispatch('logout');
+			this.$router.push('/login');
 		}
 	}
 };
@@ -64,6 +69,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
+	position: relative;
 }
 
 .reservation h1 {
@@ -94,7 +100,7 @@ export default {
   transition: opacity 0.3s;
 }
 .page-enter,
-.page-leave-active {
+.page-leave-to {
   opacity: 0;
 }
 
@@ -111,6 +117,21 @@ export default {
 	justify-content: center;
 	align-items: center;
 	z-index: 110;
+}
+
+#logout-button {
+	position: absolute;
+	right: 40px;
+	top: 40px;
+	color: white;
+	background-color: #ba0000;
+    border: 1px solid #ba0000;
+
+}
+
+#logout-button:hover {
+    color: #ba0000;
+	background-color: #fff;
 }
 
 </style>

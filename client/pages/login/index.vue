@@ -25,6 +25,7 @@ import axios from "axios";
 
 export default {
     name: "Login",
+	transition: 'page',
 	data() {
 		return {
 			pseudo: '',
@@ -53,5 +54,14 @@ export default {
 	align-items: center;
 	z-index: 50;
 	position: relative
+}
+
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.3s;
+}
+.page-enter,
+.page-leave-to {
+  opacity: 0;
 }
 </style>
