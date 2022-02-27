@@ -7,7 +7,8 @@ const createStore = () => {
 			meetingRoom: {},
 			meetingRooms: [],
 			reservationDate: new Date().toISOString().split('T')[0],
-			slots: []
+			slots: [],
+			token: null,
 		}),
 		mutations: {
 			setMeetingRoom(state, room) {
@@ -21,6 +22,9 @@ const createStore = () => {
 			},
 			setSlots(state, slots) {
 				state.slots = slots;
+			},
+			setToken(state, token) {
+				state.token = token;
 			}
 		},
 		actions: {
@@ -71,6 +75,13 @@ const createStore = () => {
 						return slotsMeetingRooms;
 					})
 				vuexContext.commit('setSlots', slots);
+			},
+			authenticateUser(vuexContext, authData) {
+				var url = process.env.API_URL + 'login'
+				return axios.get(url, { params: { pseudo: authData.pseudo, password: authData.password } })
+				.then(result => vuexContext.commit('setToken', result.idToken))
+				.catch(e => console.log(e));
+
 			}
 		},
 		getters: {

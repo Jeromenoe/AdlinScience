@@ -7,13 +7,13 @@
 				</v-toolbar>
 				<v-card-text style="padding-bottom: 2px">
 					<v-form>
-						<v-text-field prepend-icon="mdi-account" name="login" label="Pseudo" type="text"></v-text-field>
-						<v-text-field id="password" prepend-icon="mdi-lock" name="password" label="Mot de passe" type="password"></v-text-field>
+						<v-text-field v-model="pseudo" prepend-icon="mdi-account" name="login" label="Pseudo" type="text"></v-text-field>
+						<v-text-field v-model="password" id="password" prepend-icon="mdi-lock" name="password" label="Mot de passe" type="password"></v-text-field>
 					</v-form>
 				</v-card-text>
 				<v-card-actions>
 					<v-spacer></v-spacer>
-					<v-btn color="primary" to="/" style="margin-right: 10px; margin-bottom: 6px">Login</v-btn>
+					<v-btn color="primary" @click="this.login" style="margin-right: 10px; margin-bottom: 6px">Login</v-btn>
 				</v-card-actions>
 			</v-card>
 		</div>
@@ -21,8 +21,27 @@
 </template>
 
 <script>
+import axios from "axios";
+
 export default {
     name: "Login",
+	data() {
+		return {
+			pseudo: '',
+			password: '',
+		}
+	},
+	methods: {
+		login() {
+			this.$store.dispatch('authenticateUser', {
+				pseudo: this.pseudo,
+				password: this.password
+			})
+			.then(() => {
+				this.$router.push('/reservation');
+			});
+		}
+	}
 };
 </script>
 

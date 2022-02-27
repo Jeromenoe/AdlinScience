@@ -8,6 +8,7 @@
 <style scoped>
 .error-page {
     text-align: center;
+	margin-top: 20px;
 }
 
 .error-page a {
