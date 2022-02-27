@@ -69,7 +69,7 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-	position: relative;
+	/* position: relative; */
 }
 
 .reservation h1 {
@@ -122,7 +122,7 @@ export default {
 #logout-button {
 	position: absolute;
 	right: 40px;
-	top: 40px;
+	top: 80px;
 	color: white;
 	background-color: #ba0000;
     border: 1px solid #ba0000;

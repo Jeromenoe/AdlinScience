@@ -1,5 +1,4 @@
 import vuex from 'vuex';
-import axios from 'axios';
 import Cookie from 'js-cookie';
 
 const createStore = () => {
@@ -32,29 +31,29 @@ const createStore = () => {
 			}
 		},
 		actions: {
-			async nuxtServerInit({ commit }) {
-				const meetingRooms = await axios.get(process.env.API_URL + 'meetingRooms')
+			async nuxtServerInit(vuexContext, context) {
+				const meetingRooms = await context.app.$axios.$get('meetingRooms')
 					.then(res => {
 						const meetingRooms = [];
-						for (const key in res.data.rooms) {
-							meetingRooms.push({ ...res.data.rooms[key], id: parseInt(key) });
+						for (const key in res.rooms) {
+							meetingRooms.push({ ...res.rooms[key], id: parseInt(key) });
 						}
 						return meetingRooms;
 					})
-				commit('setMeetingRooms', meetingRooms);
-				commit('setMeetingRoom', meetingRooms[0]);
-				const slots = await axios.get(process.env.API_URL + 'slotsMeetingRooms', { params: { name: meetingRooms[0].name } })
+				vuexContext.commit('setMeetingRooms', meetingRooms);
+				vuexContext.commit('setMeetingRoom', meetingRooms[0]);
+				const slots = await context.app.$axios.$get('slotsMeetingRooms', { params: { name: meetingRooms[0].name } })
 					.then(res => {
 						const slotsMeetingRooms = [];
-						if (res.data.slots) {
+						if (res.slots) {
 							return [];
 						}
-						for (const key in res.data) {
-							slotsMeetingRooms.push({ ...res.data[key], id: parseInt(key) });
+						for (const key in res) {
+							slotsMeetingRooms.push({ ...res[key], id: parseInt(key) });
 						}
 						return slotsMeetingRooms;
 					})
-				commit('setSlots', slots);
+					vuexContext.commit('setSlots', slots);
 			},
 			addSlot(vuexContext, slot) {
 				vuexContext.commit('setSlots', this.slots.concat(slot));
@@ -67,14 +66,14 @@ const createStore = () => {
 				vuexContext.commit('setReservationDate', date);
 			},
 			async setSlots(vuexContext, name) {
-				const slots = await axios.get(process.env.API_URL + 'slotsMeetingRooms', { params: { name } })
+				const slots = await this.$axios.$get(process.env.API_URL + 'slotsMeetingRooms', { params: { name } })
 					.then(res => {
 						const slotsMeetingRooms = [];
-						if (res.data.slots) {
+						if (res.slots) {
 							return [];
 						}
-						for (const key in res.data) {
-							slotsMeetingRooms.push({ ...res.data[key], id: parseInt(key) });
+						for (const key in res) {
+							slotsMeetingRooms.push({ ...res[key], id: parseInt(key) });
 						}
 						return slotsMeetingRooms;
 					})
@@ -82,13 +81,13 @@ const createStore = () => {
 			},
 			authenticateUser(vuexContext, authData) {
 				var url = process.env.API_URL + 'login'
-				return axios.get(url, { params: { pseudo: authData.pseudo, password: authData.password } })
+				return this.$axios.$get(url, { params: { pseudo: authData.pseudo, password: authData.password } })
 				.then(result => {
-					vuexContext.commit('setToken', result.data.token);
-					localStorage.setItem('token', result.data.token);
-					localStorage.setItem('tokenExpiration', new Date().getTime() + result.data.expiresIn * 1000);
-					Cookie.set('jwt', result.data.token);
-					Cookie.set('expirationDate', new Date().getTime() + result.data.expiresIn * 1000);
+					vuexContext.commit('setToken', result.token);
+					localStorage.setItem('token', result.token);
+					localStorage.setItem('tokenExpiration', new Date().getTime() + result.expiresIn * 1000);
+					Cookie.set('jwt', result.token);
+					Cookie.set('expirationDate', new Date().getTime() + result.expiresIn * 1000);
 				})
 				.catch(e => console.log(e));
 			},

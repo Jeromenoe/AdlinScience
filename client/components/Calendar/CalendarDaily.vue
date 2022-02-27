@@ -36,7 +36,6 @@
 
 <script>
 import CustomButton from "@/components/UI/CustomButton";
-import axios from "axios";
 
 export default {
     components: {
@@ -232,9 +231,8 @@ export default {
 				const data = Object.keys(newEvent)
 					.map((key, index) => key + '=' + encodeURIComponent(newEvent[key]))
 					.join('&');
-				var url = process.env.API_URL + 'slotsMeetingRooms'
-                axios.post(
-                        url,
+                this.$axios.$post(
+                        'slotsMeetingRooms',
                         data,
 						{
 							headers: {
