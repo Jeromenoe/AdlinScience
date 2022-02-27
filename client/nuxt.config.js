@@ -46,5 +46,12 @@ export default {
   env: {
     API_URL: process.env.API_URL
   },
-  
+  router: {
+	  extendRoutes(routes, resolve) {
+		  routes.push({
+			  path: '/',
+			  redirect: '/reservation'
+		  })
+	  }
+  }
 }
