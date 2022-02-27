@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const slotsMeetingRoomsCtrl = require('../controllers/slotMeetingRooms');
+const auth = require('../middleware/auth');
 
 /**
  * expected query : 
  * name (String of the room name)
  */
-router.get('/slotsMeetingRooms', slotsMeetingRoomsCtrl.getSlots);
+router.get('/slotsMeetingRooms', auth, slotsMeetingRoomsCtrl.getSlots);
 
 
 /**

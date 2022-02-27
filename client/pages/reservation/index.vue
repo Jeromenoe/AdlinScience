@@ -25,6 +25,9 @@ export default {
         MyCalendar,
 		RoomPage,
     },
+	async fetch() {
+		await this.$store.dispatch('setSlots', this.$store.getters.meetingRoom.name);
+	},
 	data() {
 		return {
 			showRoomPage: false,
@@ -44,8 +47,6 @@ export default {
 			return 'hidden';
 		}
     },
-	created() {
-	},
 	methods: {
 		cancel() {
             this.showRoomPage = false;

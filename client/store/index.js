@@ -1,5 +1,5 @@
 import vuex from 'vuex';
-import Cookie from 'js-cookie';
+// import Cookie from 'js-cookie';
 
 const createStore = () => {
 	return new vuex.Store({
@@ -42,18 +42,6 @@ const createStore = () => {
 					})
 				vuexContext.commit('setMeetingRooms', meetingRooms);
 				vuexContext.commit('setMeetingRoom', meetingRooms[0]);
-				const slots = await context.app.$axios.$get('slotsMeetingRooms', { params: { name: meetingRooms[0].name } })
-					.then(res => {
-						const slotsMeetingRooms = [];
-						if (res.slots) {
-							return [];
-						}
-						for (const key in res) {
-							slotsMeetingRooms.push({ ...res[key], id: parseInt(key) });
-						}
-						return slotsMeetingRooms;
-					})
-					vuexContext.commit('setSlots', slots);
 			},
 			addSlot(vuexContext, slot) {
 				vuexContext.commit('setSlots', this.slots.concat(slot));
@@ -66,7 +54,7 @@ const createStore = () => {
 				vuexContext.commit('setReservationDate', date);
 			},
 			async setSlots(vuexContext, name) {
-				const slots = await this.$axios.$get(process.env.API_URL + 'slotsMeetingRooms', { params: { name } })
+				const slots = await this.$axios.$get('slotsMeetingRooms', { params: { name } })
 					.then(res => {
 						const slotsMeetingRooms = [];
 						if (res.slots) {
@@ -86,8 +74,8 @@ const createStore = () => {
 					vuexContext.commit('setToken', result.token);
 					localStorage.setItem('token', result.token);
 					localStorage.setItem('tokenExpiration', new Date().getTime() + result.expiresIn * 1000);
-					Cookie.set('jwt', result.token);
-					Cookie.set('expirationDate', new Date().getTime() + result.expiresIn * 1000);
+					this.$cookies.set('jwt', result.token, { secure: true});
+					this.$cookies.set('expirationDate', new Date().getTime() + result.expiresIn * 1000, { secure: true});
 				})
 				.catch(e => console.log(e));
 			},
@@ -118,11 +106,12 @@ const createStore = () => {
 					return ;
 				}
 				vuexContext.commit('setToken', token);
+				this.$axios.setToken(token);
 			},
 			logout(vuexContext) {
 				vuexContext.commit('clearToken');
-				Cookie.remove('token');
-				Cookie.remove('expirationDate');
+				this.$cookies.remove('token', { secure: true});
+				this.$cookies.remove('expirationDate', { secure: true});
 				if (process.client) {
 					localStorage.removeItem('token');
 					localStorage.removeItem('tokenExpiration');

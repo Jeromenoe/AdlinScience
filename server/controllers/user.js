@@ -5,6 +5,6 @@ exports.login = (req, res) => {
 		pseudo: 'req.query.pseudo',
 		password: 'mypass',
 		token: 'ahaha',
-		expiresIn: 10,
+		expiresIn: 200,
 	})
 }
