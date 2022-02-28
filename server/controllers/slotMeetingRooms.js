@@ -1,16 +1,30 @@
 const fs = require('fs');
 const path = require('path');
 const Room = require('../models/Room');
+const jwt = require('jsonwebtoken');
 
 
 // Get slots of a particular meeting room
 exports.getSlots = async (req, res) => {
 	var room = await Room.findOne({ name: req.query.name }).exec();
-	let data = [];
+	let slots = [];
 	if (room) {
-		data = room.slots;
+		slots = room.slots;
 	}
-	res.json(data);
+	let decodedToken = {};
+	if (req.headers.authorization) {
+		const token = req.headers.authorization;
+		decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+	}
+	let userId = decodedToken.userId;
+	console.log(userId)
+	if (userId) {
+		slots = slots.map((slot) => {
+			let newSlot = { ...slot._doc, owned: (userId.localeCompare(slot.userId) == 0) ? true : false };
+			return newSlot;
+		});
+	}
+	res.json(slots);
 }
 
 
@@ -54,7 +68,7 @@ exports.createSlot = async (req, res) => {
 					}
 				})
 				room.slots.push({
-					userName: 'toto',
+					userId: res.locals.user,
 					dateStart: slot.dateStart,
 					dateEnd: slot.dateEnd
 				})
@@ -62,7 +76,7 @@ exports.createSlot = async (req, res) => {
 				room = new Room({
 					name: slot.name,
 					slots: [{
-						userName: 'toto',
+						userId: res.locals.user,
 						dateStart: slot.dateStart,
 						dateEnd: slot.dateEnd
 					}]

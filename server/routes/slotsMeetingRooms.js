@@ -16,6 +16,6 @@ router.get('/slotsMeetingRooms', auth, slotsMeetingRoomsCtrl.getSlots);
  * dateStart (timestamp in ms)
  * dateEnd (timestamp in ms)
  */
-router.post('/slotsMeetingRooms', slotsMeetingRoomsCtrl.createSlot);
+router.post('/slotsMeetingRooms', auth, slotsMeetingRoomsCtrl.createSlot);
 
 module.exports = router;

@@ -6,7 +6,7 @@ const RoomSchema = new mongoose.Schema({
 	  required: true,
 	},
 	slots: [{
-		userName: {
+		userId: {
 			type: String,
 			required: true
 		},
