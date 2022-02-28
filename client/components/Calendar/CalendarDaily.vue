@@ -101,7 +101,7 @@ export default {
                 this.createStart = this.roundTime(mouse);
                 this.createEvent = {
                     name: "Créneau actuel",
-                    color: "#0070BA",
+                    color: "#60409A",
                     start: this.createStart,
                     end: this.createStart + 15 * 60 * 1000,
                     timed: true,
@@ -242,7 +242,11 @@ export default {
 							}
 						}
                     )
-                    .then((response) => console.log(response));
+                    .then((response) => {
+						setTimeout(() => {
+							this.$store.dispatch('setSlots', this.roomName)
+						}, 500)
+					})
             }
         },
         initEvents(slots) {
