@@ -8,7 +8,7 @@ exports.getUser = async (req, res) => {
 	res.json({name: user.pseudo, role: user.role})
 }
 
-const parseConnexion = (req) => {
+const parseLogin = (req) => {
 	if (!req.query.pseudo) {
 		throw 'Pseudo must me specified';
 	}
@@ -25,7 +25,7 @@ const parseConnexion = (req) => {
 
 exports.login = async (req, res) => {
 	try {
-		parseConnexion();
+		parseLogin(req);
 		let user = await User.findOne({ pseudo: req.query.pseudo });
 		if (!user) {
 			throw 'User not found...';
@@ -39,7 +39,7 @@ exports.login = async (req, res) => {
 		res.status(200).json({
 			token: jwt.sign(
 				{ userId: user._id },
-				'RANDOM_TOKEN_SECRET',
+				process.env.TOKEN_KEY,
 				),
 			expiresIn: 7200
 		})
@@ -48,9 +48,24 @@ exports.login = async (req, res) => {
 	}
 }
 
+const parseSignup = (req) => {
+	if (!req.body.pseudo) {
+		throw 'Pseudo must me specified';
+	}
+	if (req.body.pseudo.length > 10) {
+		throw 'Pseudo length must be <= 10'
+	}
+	if (!req.body.password) {
+		throw 'Password must me specified';
+	}
+	if (req.body.password.length > 10 || req.body.password.length < 5) {
+		throw 'Password length must be <= 10 && >= 5'
+	}
+}
+
 exports.signup = async (req, res) => {
 	try {
-		parseConnexion();
+		parseSignup(req);
 		const user = new User({
 			pseudo: req.body.pseudo,
 			password: await bcrypt.hash(req.body.password, 10)
@@ -59,7 +74,7 @@ exports.signup = async (req, res) => {
 		res.status(200).json({
 			token: jwt.sign(
 				{ userId: user._id },
-				'RANDOM_TOKEN_SECRET',
+				process.env.TOKEN_KEY,
 				),
 			expiresIn: 7200
 		})

@@ -5,7 +5,7 @@ module.exports = (req, res, next) => {
 		if (!req.headers.authorization)
 			throw 'Token must be specified!';
 		const token = req.headers.authorization;
-		const decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
+		const decodedToken = jwt.verify(token, process.env.TOKEN_KEY);
 		res.locals.user = decodedToken.userId;
 		next();
 	} catch (error) {
