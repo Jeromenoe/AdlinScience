@@ -2,7 +2,11 @@
     <div class="header-container">
         <header class="the-header">
             <div class="logo">
-                <nuxt-link class="adlin-science" tag="img" src="https://res2.weblium.site/res/5f0496880f197a0023468411/60296f80a2ddf40021d44a69_optimized_387.webp" to="/"></nuxt-link>
+                <nuxt-link
+				class="adlin-science"
+				tag="img"
+				src="https://res2.weblium.site/res/5f0496880f197a0023468411/60296f80a2ddf40021d44a69_optimized_387.webp"
+				to="/"></nuxt-link>
             </div>
         </header>
     </div>

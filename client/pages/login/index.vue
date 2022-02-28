@@ -7,8 +7,23 @@
                 </v-toolbar>
                 <v-card-text style="padding-bottom: 2px">
                     <v-form>
-                        <v-text-field v-model="pseudo" prepend-icon="mdi-account" name="login" label="Pseudo" type="text" :rules="rules.pseudo" required></v-text-field>
-                        <v-text-field v-model="password" id="password" prepend-icon="mdi-lock" name="password" label="Mot de passe" type="password" :rules="rules.password" required></v-text-field>
+                        <v-text-field 
+						v-model="pseudo" 
+						prepend-icon="mdi-account" 
+						name="login" 
+						label="Pseudo" 
+						type="text" 
+						:rules="rules.pseudo" 
+						required></v-text-field>
+                        <v-text-field 
+						v-model="password" 
+						id="password" 
+						prepend-icon="mdi-lock" 
+						name="password" 
+						label="Mot de passe" 
+						type="password" 
+						:rules="rules.password" 
+						required></v-text-field>
                     </v-form>
                 </v-card-text>
                 <v-card-actions>
@@ -21,8 +36,16 @@
                         </v-btn>
                     </v-btn-toggle>
                     <v-spacer></v-spacer>
-                    <v-btn v-if="toggleBtn == 'login'" color="primary" @click="this.login" style="margin-right: 10px; margin-bottom: 8px" :disabled="!formIsValid">Login</v-btn>
-                    <v-btn v-else color="primary" @click="this.signup" style="margin-right: 10px; margin-bottom: 8px" :disabled="!formIsValid">Signup</v-btn>
+                    <v-btn 
+					v-if="toggleBtn == 'login'" 
+					color="primary" 
+					@click="this.login" style="margin-right: 10px; margin-bottom: 8px" 
+					:disabled="!formIsValid">Login</v-btn>
+                    <v-btn 
+					v-else color="primary" 
+					@click="this.signup" 
+					style="margin-right: 10px; margin-bottom: 8px" 
+					:disabled="!formIsValid">Signup</v-btn>
                 </v-card-actions>
                 <v-snackbar v-model="snackbar" :timeout="timeout" top right style="top:80px;">
                     {{ text }}

@@ -2,7 +2,11 @@
     <div class='custom-calendar'>
         <div>
             <DayPicker @input="updateDate" />
-            <CalendarDaily :slots="slots" :roomName="roomName" class="calendar" :date="date" />
+            <CalendarDaily
+			:slots="slots"
+			:roomName="roomName"
+			class="calendar"
+			:date="date" />
         </div>
     </div>
 </template>

@@ -70,7 +70,6 @@ export default {
     display: flex;
     flex-direction: column;
     align-items: center;
-	/* position: relative; */
 }
 
 .reservation h1 {

@@ -20,7 +20,11 @@
 				style="border: 1px solid #eee">
                     <template v-slot:event="{ event, timed, eventSummary }">
                         <div class="v-event-draggable" v-html="eventSummary()"></div>
-						<button id="delete-btn" title="Delete slot" v-if="event.owned || !user.role.localeCompare('admin')" @click="deleteSlot(event.slotId)">x</button>
+						<button
+						id="delete-btn"
+						title="Delete slot"
+						v-if="event.owned || !user.role.localeCompare('admin')"
+						@click="deleteSlot(event.slotId)">x</button>
                         <div 
 						v-if="timed && event.movable == true" 
 						class="v-event-drag-bottom" 
