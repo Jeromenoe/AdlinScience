@@ -271,7 +271,24 @@ export default {
             this.events = events;
         },
 		deleteSlot(slotId) {
-			console.log(slotId)
+			let params = {
+				roomName: this.roomName,
+				slotId
+			}
+			const data = Object.keys(params)
+				.map((key, index) => key + '=' + encodeURIComponent(params[key]))
+				.join('&');
+			this.$axios.$delete(
+					'slotsMeetingRooms',
+					{
+						data: data,
+						headers: {
+							"Content-Type": 'application/x-www-form-urlencoded',
+							"Authorization": this.$store.getters.token,
+						}
+					}
+				)
+				.then((response) => this.$store.dispatch('setSlots', this.roomName));
 		}
     },
     created() {

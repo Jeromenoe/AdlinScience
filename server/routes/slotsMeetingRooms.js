@@ -18,4 +18,11 @@ router.get('/slotsMeetingRooms', auth, slotsMeetingRoomsCtrl.getSlots);
  */
 router.post('/slotsMeetingRooms', auth, slotsMeetingRoomsCtrl.createSlot);
 
+/**
+ * Expected body :
+ * roomName (String of the room name)
+ * slotId (Id of the slot)
+ */
+ router.delete('/slotsMeetingRooms', auth, slotsMeetingRoomsCtrl.deleteSlot);
+
 module.exports = router;

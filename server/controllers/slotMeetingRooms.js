@@ -93,3 +93,24 @@ exports.createSlot = async (req, res) => {
 		res.status(400).json(error);
 	}
 }
+
+// Get slots of a particular meeting room
+exports.deleteSlot = async (req, res) => {
+	var room = await Room.findOne({ name: req.body.roomName }).exec();
+	let slots = [];
+	if (room) {
+		slots = room.slots;
+	}
+	let slot = slots.filter((slot) => {
+		return slot._id.toString().localeCompare(req.body.slotId) == 0
+	})
+	if (slot.length > 0 && slot[0].userId.toString().localeCompare(res.locals.user) == 0) {
+		for (var i = 0; i < slots.length; i++) { 
+			if (slots[i]._id.toString().localeCompare(req.body.slotId) == 0) {
+				slots.splice(i, 1);
+			}
+		}
+	}
+	await room.save();
+	res.json(slots);
+}
