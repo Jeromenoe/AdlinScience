@@ -146,6 +146,11 @@ export default {
                         newEnd = newStart + duration;
                     }
                 }
+				for (var j = 0; j < this.events.length - 1; j++) {
+					if (newStart <= this.events[j].start && newEnd > this.events[j].start) {
+						return ;
+					}
+				}
                 this.dragEvent.start = newStart;
                 this.dragEvent.end = newEnd;
             } else if (this.createEvent && this.createStart !== null) {
