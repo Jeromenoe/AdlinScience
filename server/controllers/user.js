@@ -2,6 +2,12 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const User = require('../models/User');
 
+exports.getUser = async (req, res) => {
+	let userId = res.locals.user;
+	let user = await User.findOne({ _id: userId });
+	res.json({name: user.pseudo, role: user.role})
+}
+
 exports.login = async (req, res) => {
 	try {
 		let user = await User.findOne({ pseudo: req.query.pseudo });

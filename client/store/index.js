@@ -9,6 +9,10 @@ const createStore = () => {
 			reservationDate: new Date().toISOString().split('T')[0],
 			slots: [],
 			token: null,
+			user: {
+				name: '',
+				role: ''
+			}
 		}),
 		mutations: {
 			setMeetingRoom(state, room) {
@@ -28,6 +32,9 @@ const createStore = () => {
 			},
 			clearToken(state) {
 				state.token = null;
+			},
+			setUser(state, user) {
+				state.user = user;
 			}
 		},
 		actions: {
@@ -132,6 +139,7 @@ const createStore = () => {
 				}
 				this.$axios.setToken(token);
 				vuexContext.commit('setToken', token);
+				vuexContext.dispatch('setUser');
 			},
 			logout(vuexContext) {
 				vuexContext.commit('clearToken');
@@ -141,6 +149,14 @@ const createStore = () => {
 					localStorage.removeItem('token');
 					localStorage.removeItem('tokenExpiration');
 				}
+			},
+			async setUser(vuexContext) {
+				await this.$axios.$get(
+					'user',
+					{
+						headers: { "Authorization": vuexContext.getters.token }
+					}
+				).then((user) => vuexContext.commit('setUser', user))
 			}
 		},
 		getters: {
@@ -161,6 +177,9 @@ const createStore = () => {
 			},
 			token(state) {
 				return state.token;
+			},
+			user(state) {
+				return state.user;
 			}
 		}
 	})

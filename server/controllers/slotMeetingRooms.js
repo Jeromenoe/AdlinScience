@@ -2,6 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const Room = require('../models/Room');
 const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
 
 // Get slots of a particular meeting room
@@ -11,18 +12,12 @@ exports.getSlots = async (req, res) => {
 	if (room) {
 		slots = room.slots;
 	}
-	let decodedToken = {};
-	if (req.headers.authorization) {
-		const token = req.headers.authorization;
-		decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
-	}
-	let userId = decodedToken.userId;
-	if (userId) {
-		slots = slots.map((slot) => {
-			let newSlot = { ...slot._doc, owned: (userId.localeCompare(slot.userId) == 0) ? true : false };
-			return newSlot;
-		});
-	}
+	let userId = res.locals.user;
+	let user = await User.findOne({ _id: userId });
+	slots = slots.map((slot) => {
+		let newSlot = { ...slot._doc, owned: (userId.localeCompare(slot.userId) == 0) ? true : false };
+		return newSlot;
+	});
 	res.json(slots);
 }
 
@@ -104,7 +99,9 @@ exports.deleteSlot = async (req, res) => {
 	let slot = slots.filter((slot) => {
 		return slot._id.toString().localeCompare(req.body.slotId) == 0
 	})
-	if (slot.length > 0 && slot[0].userId.toString().localeCompare(res.locals.user) == 0) {
+	let userId = res.locals.user;
+	let user = await User.findOne({ _id: userId });
+	if (slot.length > 0 && (!slot[0].userId.toString().localeCompare(res.locals.user) || !user.role.localeCompare('admin'))) {
 		for (var i = 0; i < slots.length; i++) { 
 			if (slots[i]._id.toString().localeCompare(req.body.slotId) == 0) {
 				slots.splice(i, 1);
