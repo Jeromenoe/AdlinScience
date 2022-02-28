@@ -1,7 +1,7 @@
 <template>
     <div class='container'>
-		<div>
-			<v-card width="400px">
+		<div tabindex="0" @keydown.enter="toggleBtn == 'login' ? login() : signup()">
+			<v-card width="400px" >
 				<v-toolbar dark color="primary" height="60px">
 					<v-toolbar-title>Connexion</v-toolbar-title>
 				</v-toolbar>
