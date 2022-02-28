@@ -36,6 +36,14 @@
 				style="margin-top: 20px;">Valider</CustomButton>
             </v-sheet>
         </v-col>
+		<v-snackbar v-model="snackbar" :timeout="timeout" top right style="top:80px;">
+			{{ text }}
+			<template v-slot:action="{ attrs }">
+				<v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+					Close
+				</v-btn>
+			</template>
+		</v-snackbar>
     </v-row>
 </template>
 
@@ -56,6 +64,9 @@ export default {
         extendOriginal: null,
         previousTime: 0,
 		user: null,
+		snackbar: false,
+		text: 'My timeout is set to 2000.',
+		timeout: 2000,
     }),
     props: {
         date: {
@@ -252,11 +263,15 @@ export default {
 							}
 						}
                     )
-                    .then((response) => {
+                    .then(() => {
 						setTimeout(() => {
 							this.$store.dispatch('setSlots', this.roomName)
 						}, 500)
 					})
+					.then(() => {
+						this.text = "Slot ajouté"
+						this.snackbar = true
+					});
             }
         },
         initEvents(slots) {
@@ -302,7 +317,11 @@ export default {
 						}
 					}
 				)
-				.then((response) => this.$store.dispatch('setSlots', this.roomName));
+				.then(() => this.$store.dispatch('setSlots', this.roomName))
+				.then(() => {
+					this.text = "Slot supprimé"
+					this.snackbar = true
+				});
 		}
     },
     created() {
