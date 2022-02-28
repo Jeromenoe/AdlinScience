@@ -88,7 +88,6 @@ const createStore = () => {
 					this.$cookies.set('jwt', result.token, { secure: true});
 					this.$cookies.set('expirationDate', new Date().getTime() + result.expiresIn * 1000, { secure: true});
 				})
-				.catch(e => console.log(e));
 			},
 			signupUser(vuexContext, authData) {
 				const data = Object.keys(authData)
@@ -109,7 +108,6 @@ const createStore = () => {
 					this.$cookies.set('jwt', result.token, { secure: true});
 					this.$cookies.set('expirationDate', new Date().getTime() + result.expiresIn * 1000, { secure: true});
 				})
-				.catch(e => console.log(e));
 			},
 			initAuth(vuexContext, req) {
 				let token;
