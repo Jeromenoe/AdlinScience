@@ -20,6 +20,7 @@
 				style="border: 1px solid #eee">
                     <template v-slot:event="{ event, timed, eventSummary }">
                         <div class="v-event-draggable" v-html="eventSummary()"></div>
+						<button id="delete-btn" title="Delete slot" v-if="event.owned" @click="deleteSlot(event.slotId)">x</button>
                         <div 
 						v-if="timed && event.movable == true" 
 						class="v-event-drag-bottom" 
@@ -236,7 +237,8 @@ export default {
                         data,
 						{
 							headers: {
-								"Content-Type": 'application/x-www-form-urlencoded'
+								"Content-Type": 'application/x-www-form-urlencoded',
+								"Authorization": this.$store.getters.token,
 							}
 						}
                     )
@@ -246,17 +248,31 @@ export default {
         initEvents(slots) {
             const events = [];
             for (const slot of slots) {
+				let name;
+				let color;
+				if (slot.owned) {
+					name = "Mon créneau";
+					color = "#0070BA";
+				} else {
+					name = "Créneau indisponible";
+					color = "#ff0000";
+				}
                 events.push({
-                    name: "Créneau indisponible",
-                    color: "#ff0000",
+                    name,
+                    color,
                     start: parseInt(slot.dateStart),
                     end: parseInt(slot.dateEnd),
                     timed: true,
                     movable: false,
+					owned: slot.owned,
+					slotId: slot._id,
                 });
             }
             this.events = events;
         },
+		deleteSlot(slotId) {
+			console.log(slotId)
+		}
     },
     created() {
         this.initEvents(this.slots);
@@ -298,5 +314,13 @@ export default {
     &:hover::after {
         display: block;
     }
+}
+
+#delete-btn {
+	position: absolute;
+	top: -3px;
+	right: 10px;
+	width: 20px;
+	font-size: 1.3em;
 }
 </style>

@@ -17,7 +17,6 @@ exports.getSlots = async (req, res) => {
 		decodedToken = jwt.verify(token, 'RANDOM_TOKEN_SECRET');
 	}
 	let userId = decodedToken.userId;
-	console.log(userId)
 	if (userId) {
 		slots = slots.map((slot) => {
 			let newSlot = { ...slot._doc, owned: (userId.localeCompare(slot.userId) == 0) ? true : false };

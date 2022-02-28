@@ -54,7 +54,12 @@ const createStore = () => {
 				vuexContext.commit('setReservationDate', date);
 			},
 			async setSlots(vuexContext, name) {
-				const slots = await this.$axios.$get('slotsMeetingRooms', { params: { name } })
+				const slots = await this.$axios.$get(
+					'slotsMeetingRooms',
+					{
+						params: { name },
+						headers: { "Authorization": vuexContext.getters.token }
+					})
 					.then(res => {
 						const slotsMeetingRooms = [];
 						if (res.slots) {
@@ -125,8 +130,8 @@ const createStore = () => {
 					vuexContext.dispatch('logout');
 					return ;
 				}
-				vuexContext.commit('setToken', token);
 				this.$axios.setToken(token);
+				vuexContext.commit('setToken', token);
 			},
 			logout(vuexContext) {
 				vuexContext.commit('clearToken');
@@ -153,6 +158,9 @@ const createStore = () => {
 			},
 			isAuthenticated(state) {
 				return state.token != null;
+			},
+			token(state) {
+				return state.token;
 			}
 		}
 	})
