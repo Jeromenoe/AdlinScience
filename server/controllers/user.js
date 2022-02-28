@@ -8,8 +8,24 @@ exports.getUser = async (req, res) => {
 	res.json({name: user.pseudo, role: user.role})
 }
 
+const parseConnexion = (req) => {
+	if (!req.query.pseudo) {
+		throw 'Pseudo must me specified';
+	}
+	if (req.query.pseudo.length > 10) {
+		throw 'Pseudo length must be <= 10'
+	}
+	if (!req.query.password) {
+		throw 'Password must me specified';
+	}
+	if (req.query.password.length > 10 || req.query.password.length < 5) {
+		throw 'Password length must be <= 10 && >= 5'
+	}
+}
+
 exports.login = async (req, res) => {
 	try {
+		parseConnexion();
 		let user = await User.findOne({ pseudo: req.query.pseudo });
 		if (!user) {
 			throw 'User not found...';
@@ -34,8 +50,7 @@ exports.login = async (req, res) => {
 
 exports.signup = async (req, res) => {
 	try {
-		if (!req.body.password || req.body.password.length < 5)
-			throw 'Password is required!';
+		parseConnexion();
 		const user = new User({
 			pseudo: req.body.pseudo,
 			password: await bcrypt.hash(req.body.password, 10)
