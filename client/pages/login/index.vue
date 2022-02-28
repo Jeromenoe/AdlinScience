@@ -12,8 +12,17 @@
 					</v-form>
 				</v-card-text>
 				<v-card-actions>
+					<v-btn-toggle v-model="toggleBtn" dense style="margin-left:16px; margin-bottom: 6px">
+						<v-btn value="login">
+							Login
+						</v-btn>
+						<v-btn value="signup">
+							Signup
+						</v-btn>
+					</v-btn-toggle>
 					<v-spacer></v-spacer>
-					<v-btn color="primary" @click="this.login" style="margin-right: 10px; margin-bottom: 6px">Login</v-btn>
+					<v-btn v-if="toggleBtn == 'login'" color="primary" @click="this.login" style="margin-right: 10px; margin-bottom: 8px">Login</v-btn>
+					<v-btn v-else color="primary" @click="this.signup" style="margin-right: 10px; margin-bottom: 8px">Signup</v-btn>
 				</v-card-actions>
 			</v-card>
 		</div>
@@ -21,7 +30,6 @@
 </template>
 
 <script>
-import axios from "axios";
 
 export default {
     name: "Login",
@@ -30,13 +38,23 @@ export default {
 		return {
 			pseudo: '',
 			password: '',
+			toggleBtn: 'login',
 		}
 	},
 	methods: {
 		login() {
 			this.$store.dispatch('authenticateUser', {
 				pseudo: this.pseudo,
-				password: this.password
+				password: this.password,
+			})
+			.then(() => {
+				this.$router.push('/reservation');
+			});
+		},
+		signup() {
+			this.$store.dispatch('signupUser', {
+				pseudo: this.pseudo,
+				password: this.password,
 			})
 			.then(() => {
 				this.$router.push('/reservation');

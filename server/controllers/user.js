@@ -20,7 +20,7 @@ exports.login = async (req, res) => {
 				'RANDOM_TOKEN_SECRET',
 				),
 			expiresIn: 7200
-			})
+		})
 	} catch(error) {
 		res.status(400).json({ error });
 	}
@@ -29,13 +29,19 @@ exports.login = async (req, res) => {
 exports.signup = async (req, res) => {
 	try {
 		if (!req.body.password || req.body.password.length < 5)
-			throw new Error('Password is required!');
+			throw 'Password is required!';
 		const user = new User({
 			pseudo: req.body.pseudo,
 			password: await bcrypt.hash(req.body.password, 10)
 		});
 		await user.save();
-		res.status(200).json(user);
+		res.status(200).json({
+			token: jwt.sign(
+				{ userId: user._id },
+				'RANDOM_TOKEN_SECRET',
+				),
+			expiresIn: 7200
+		})
 	} catch (error) {
 		res.status(400).json({ error });
 	}

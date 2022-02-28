@@ -78,6 +78,27 @@ const createStore = () => {
 				})
 				.catch(e => console.log(e));
 			},
+			signupUser(vuexContext, authData) {
+				const data = Object.keys(authData)
+					.map((key, index) => key + '=' + encodeURIComponent(authData[key]))
+					.join('&');
+				return this.$axios.$post(
+					'signup', 
+					data,
+					{
+						headers: {
+							"Content-Type": 'application/x-www-form-urlencoded'
+						}
+					})
+				.then(result => {
+					vuexContext.commit('setToken', result.token);
+					localStorage.setItem('token', result.token);
+					localStorage.setItem('tokenExpiration', new Date().getTime() + result.expiresIn * 1000);
+					this.$cookies.set('jwt', result.token, { secure: true});
+					this.$cookies.set('expirationDate', new Date().getTime() + result.expiresIn * 1000, { secure: true});
+				})
+				.catch(e => console.log(e));
+			},
 			initAuth(vuexContext, req) {
 				let token;
 				let expirationDate;
