@@ -18,7 +18,8 @@ exports.getSlots = async (req, res) => {
 		var room = await Room.findOne({ name: req.query.name }).exec();
 		let slots = [];
 		if (!room) {
-			throw { message: 'Room not found' };
+			res.status(200).json(slots);
+			return ;
 		}
 		slots = room.slots;
 		let userId = res.locals.user;

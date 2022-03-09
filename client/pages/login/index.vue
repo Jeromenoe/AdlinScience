@@ -63,6 +63,7 @@
 <script>
 export default {
     name: "Login",
+	middleware: 'clear-store',
     transition: "page",
     data() {
         return {

@@ -6,7 +6,7 @@
             <span class="current-room">Réservation pour {{ meetingRoom.name }}</span>
 			<button @click="showRoomPage = !showRoomPage">Salles</button>
         </div>
-        <MyCalendar :slots="slots" :roomName="meetingRoom.name"/>
+        <MyCalendar v-if="meetingRoom.name" :slots="slots" :roomName="meetingRoom.name"/>
 		<div  id="room-page" :style="{ visibility: visibility, opacity: + showRoomPage}" @click="cancelOnLeftButton">
 			<RoomPage id="room" v-if="showRoomPage" v-on:cancel="cancel"/>
 		</div>
@@ -20,7 +20,7 @@ import RoomPage from "@/components/Reservation/RoomPage";
 export default {
     name: "IndexPage",
 	transition: 'page',
-	middleware: ['check-auth', 'auth'],
+	middleware: ['check-auth', 'auth', 'set-rooms'],
     components: {
         MyCalendar,
 		RoomPage,
@@ -58,8 +58,8 @@ export default {
 			}
 		},
 		onLogout() {
-			this.$store.dispatch('logout');
 			this.$router.push('/login');
+			// this.$store.dispatch('logout');
 		}
 	}
 };

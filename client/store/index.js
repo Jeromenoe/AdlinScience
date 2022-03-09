@@ -1,5 +1,4 @@
 import vuex from 'vuex';
-// import Cookie from 'js-cookie';
 
 const createStore = () => {
 	return new vuex.Store({
@@ -35,21 +34,20 @@ const createStore = () => {
 			},
 			setUser(state, user) {
 				state.user = user;
+			},
+			clearStore(state) {
+				state.meetingRoom = {};
+				state.meetingRooms = [],
+				state.reservationDate = new Date().toISOString().split('T')[0],
+				state.slots = [],
+				state.token = null,
+				state.user = {
+					name: '',
+					role: ''
+				}
 			}
 		},
 		actions: {
-			async nuxtServerInit(vuexContext, context) {
-				const meetingRooms = await context.app.$axios.$get('meetingRooms')
-					.then(res => {
-						const meetingRooms = [];
-						for (const key in res.rooms) {
-							meetingRooms.push({ ...res.rooms[key], id: parseInt(key) });
-						}
-						return meetingRooms;
-					})
-				vuexContext.commit('setMeetingRooms', meetingRooms);
-				vuexContext.commit('setMeetingRoom', meetingRooms[0]);
-			},
 			addSlot(vuexContext, slot) {
 				vuexContext.commit('setSlots', this.slots.concat(slot));
 			},
@@ -77,9 +75,22 @@ const createStore = () => {
 						}
 						return slotsMeetingRooms;
 					})
+					.catch(() => [])
 				vuexContext.commit('setSlots', slots);
 			},
-			authenticateUser(vuexContext, authData) {
+			async setMeetingRooms(vuexContext) {
+				const meetingRooms = await this.$axios.$get('meetingRooms')
+					.then(res => {
+						const meetingRooms = [];
+						for (const key in res.rooms) {
+							meetingRooms.push({ ...res.rooms[key], id: parseInt(key) });
+						}
+						return meetingRooms;
+					})
+				vuexContext.commit('setMeetingRooms', meetingRooms);
+				vuexContext.commit('setMeetingRoom', meetingRooms[0]);
+			},
+			async authenticateUser(vuexContext, authData) {
 				return this.$axios.$get('login', { params: { pseudo: authData.pseudo, password: authData.password } })
 				.then(result => {
 					vuexContext.commit('setToken', result.token);
@@ -89,7 +100,7 @@ const createStore = () => {
 					this.$cookies.set('expirationDate', new Date().getTime() + result.expiresIn * 1000, { secure: true});
 				})
 			},
-			signupUser(vuexContext, authData) {
+			async signupUser(vuexContext, authData) {
 				const data = Object.keys(authData)
 					.map((key, index) => key + '=' + encodeURIComponent(authData[key]))
 					.join('&');
@@ -155,6 +166,10 @@ const createStore = () => {
 						headers: { "Authorization": vuexContext.getters.token }
 					}
 				).then((user) => vuexContext.commit('setUser', user))
+			},
+			clearStore(vuexContext) {
+				vuexContext.commit('clearStore');
+				vuexContext.dispatch('logout');
 			}
 		},
 		getters: {
