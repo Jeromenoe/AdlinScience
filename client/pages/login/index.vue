@@ -105,7 +105,11 @@ export default {
                     password: this.password,
                 })
                 .then(() => {
-                    this.$router.push("/reservation");
+					this.text = "Compte créé"
+					this.snackbar = true;
+					setTimeout(() => {
+						this.$router.push("/reservation");
+					}, 1500);
                 })
 				.catch((e) => {
 					this.text = "Le pseudo existe déjà"
