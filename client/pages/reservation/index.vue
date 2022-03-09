@@ -20,12 +20,13 @@ import RoomPage from "@/components/Reservation/RoomPage";
 export default {
     name: "IndexPage",
 	transition: 'page',
-	middleware: ['check-auth', 'auth', 'set-rooms'],
+	middleware: ['check-auth', 'auth'],
     components: {
         MyCalendar,
 		RoomPage,
     },
 	async fetch() {
+		await this.$store.dispatch('setMeetingRooms');
 		await this.$store.dispatch('setSlots', this.$store.getters.meetingRoom.name);
 	},
 	data() {
